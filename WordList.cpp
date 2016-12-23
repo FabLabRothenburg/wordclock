@@ -15,3 +15,4 @@ void WordList::hide(IAnimator *animator) const {
     words[i].hide(animator);
 }
 
+

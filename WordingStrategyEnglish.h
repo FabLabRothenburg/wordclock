@@ -20,3 +20,4 @@ class WordingStrategyEnglish : public IWordingStrategy {
 };
 
 #endif /* !WORDING_STRATEGY_ENGLISH_H */
+

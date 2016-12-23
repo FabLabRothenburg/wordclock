@@ -20,3 +20,4 @@ class WordingStrategyStesie : public IWordingStrategy {
 };
 
 #endif /* !WORDING_STRATEGY_STESIE_H */
+

@@ -86,3 +86,4 @@ WordList WordingStrategyStesie::wordsForTime(uint8_t hour, uint8_t minute) {
   return words;
 };
 
+

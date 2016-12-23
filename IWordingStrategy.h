@@ -9,3 +9,4 @@ class IWordingStrategy {
 };
 
 #endif /* !IWORDING_STRATEGY_H */
+

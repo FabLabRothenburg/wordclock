@@ -15,3 +15,4 @@ class WordList {
 };
 
 #endif  /* !WORD_LIST_H */
+
