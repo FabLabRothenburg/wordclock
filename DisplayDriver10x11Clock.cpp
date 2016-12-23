@@ -26,8 +26,9 @@ void DisplayDriver10x11Clock::setDots(uint8_t count, uint8_t red, uint8_t green,
 }
 
 void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
-  /* y axis is flipped */
-  y = height() - 1 - y;
+  /* y axis is flipped if x is even */
+  if ((x % 2) == 0)
+    y = height() - 1 - y;
 
   uint8_t n = x * height() + y;
 
@@ -48,6 +49,7 @@ void DisplayDriver10x11Clock::show() {
 void DisplayDriver10x11Clock::clear() {
   pixels.clear();
 }
+
 
 
 
