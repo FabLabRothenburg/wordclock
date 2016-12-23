@@ -7,6 +7,8 @@ class WordFactoryEnglish10x11Clock {
   public:
     const Word getWordIT() const;
     const Word getWordIS() const;
+    const Word getWordAM() const;
+    const Word getWordPM() const;
     const Word getWordFIVE() const;
     const Word getWordTWENTY() const;
     const Word getWordTEN() const;

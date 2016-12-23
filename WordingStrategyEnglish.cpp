@@ -5,6 +5,11 @@ WordList WordingStrategyEnglish::wordsForTime(uint8_t hour, uint8_t minute) {
   words.add(wordFactory->getWordIT());
   words.add(wordFactory->getWordIS());
 
+  if (hour >= 12)
+    words.add(wordFactory->getWordPM());
+  else
+    words.add(wordFactory->getWordAM());
+
   hour = hour % 12;
   uint8_t minuteCluster = minute / 5;
 

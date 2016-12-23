@@ -8,6 +8,14 @@ const Word WordFactoryEnglish10x11Clock::getWordIS() const {
   return Word(3, 0, 2);
 }
 
+const Word WordFactoryEnglish10x11Clock::getWordAM() const {
+  return Word(7, 0, 2);
+}
+
+const Word WordFactoryEnglish10x11Clock::getWordPM() const {
+  return Word(9, 0, 2);
+}
+
 const Word WordFactoryEnglish10x11Clock::getWordFIVE() const {
   return Word(6, 2, 4);
 }
