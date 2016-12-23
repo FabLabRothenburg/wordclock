@@ -1,5 +1,8 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
+#ifdef ESP8266
+#  include <ESP8266WiFi.h>
+#  include <ESP8266WiFiMulti.h>
+#endif
+
 #include <TimeLib.h>
 
 #include "NtpClient.h"
@@ -7,7 +10,9 @@
 #include "WordingStrategyStesie.h"
 #include "WordClockScene.h"
 
+#ifdef ESP8266
 ESP8266WiFiMulti wifiMulti;
+#endif
 
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
@@ -16,6 +21,7 @@ WordClockScene *wordClockScene;
 void setup() {
   driver.setup();
 
+#ifdef ESP8266
   // TODO  Configure your WLAN networks here
   wifiMulti.addAP("wifiname", "wifiPassword");
 
@@ -24,12 +30,16 @@ void setup() {
   }
 
   syncTime();
+#endif
 
   wordClockScene = new WordClockScene(&driver, &driver, new WordingStrategyStesie(&wordFactory));
 }
 
 void loop() {
+#ifdef ESP8266
   wifiMulti.run();
+#endif
+  
   wordClockScene->loop();
 }
 

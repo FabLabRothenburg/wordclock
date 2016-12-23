@@ -1,3 +1,4 @@
+#ifdef ESP8266
 #include <Arduino.h>
 
 #include <ESP8266WiFi.h>
@@ -66,6 +67,5 @@ void syncTime() {
   setSyncProvider(getNtpTime);
 }
 
-
-
+#endif  /* ESP8266 */
 
