@@ -1,3 +1,4 @@
+#ifdef ESP8266
 #include <Arduino.h>
 #include <PubSubClient.h>
 
@@ -32,5 +33,4 @@ class MqttController {
     void subscribe(const char *topic);
 };
 
-
-
+#endif  /* ESP8266 */

@@ -1,3 +1,4 @@
+#ifdef ESP8266
 #include "MqttController.h"
 
 /* ugly */
@@ -104,3 +105,4 @@ void MqttController::handle(char* topic, byte* payload, unsigned int length) {
   }
 }
 
+#endif  /* ESP8266 */
