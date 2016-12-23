@@ -7,6 +7,8 @@
 
 void WordClockScene::loop() {
   WordList wl = wordingStrategy->wordsForTime(hour(), minute());
+
+  driver->setDots(minute() % 5, COLOR);
   
   wl.show(animator, COLOR);
   driver->show();

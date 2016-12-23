@@ -14,6 +14,17 @@ int DisplayDriver10x11Clock::height() {
   return 10;
 }
 
+void DisplayDriver10x11Clock::setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) {
+  uint8_t positions[4] = { 0, 1, 112, 113 };
+  uint8_t i = 0;
+
+  for (; i < count; i ++)
+    pixels.setPixelColor(positions[i], pixels.Color(red, green, blue));
+
+  for (; i < 4; i ++)
+    pixels.setPixelColor(positions[i], 0);
+}
+
 void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
   /* y axis is flipped */
   y = height() - 1 - y;
