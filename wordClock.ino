@@ -51,9 +51,9 @@ void setup() {
   syncTime();
 
   mqttController->setServer({ 176, 9, 118, 134 });
-  mqttController->setId("leClock");
-  mqttController->setUser("adriansUhr");
-  mqttController->setPassword("Chohpi9eequia1epoh6Aich0");
+  mqttController->setId("mqtt_client_id");
+  mqttController->setUser("mqtt_user_name");
+  mqttController->setPassword("mqtt_password");
 #endif
 }
 
