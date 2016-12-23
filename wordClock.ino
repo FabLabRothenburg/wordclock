@@ -8,12 +8,14 @@
 #include "NtpClient.h"
 #include "DisplayDriverFrickelClock.h"
 #include "DisplayDriver10x11Clock.h"
+#include "MqttController.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordClockScene.h"
 
 #ifdef ESP8266
 ESP8266WiFiMulti wifiMulti;
+WiFiClient wifiClient;
 #endif
 
 
@@ -29,10 +31,16 @@ WordingStrategyStesie strategy = { &wordFactory };
 
 WordClockScene wordClockScene = { &driver, &driver, &strategy };
 
+#ifdef ESP8266
+MqttController *mqttController = new MqttController(&wordClockScene, wifiClient);
+#endif
+
 void setup() {
   driver.setup();
 
 #ifdef ESP8266
+  Serial.begin(9600);
+
   // TODO  Configure your WLAN networks here
   wifiMulti.addAP("wifiname", "wifiPassword");
 
@@ -41,16 +49,23 @@ void setup() {
   }
 
   syncTime();
+
+  mqttController->setServer({ 176, 9, 118, 134 });
+  mqttController->setId("leClock");
+  mqttController->setUser("adriansUhr");
+  mqttController->setPassword("Chohpi9eequia1epoh6Aich0");
 #endif
 }
 
 void loop() {
 #ifdef ESP8266
   wifiMulti.run();
+  mqttController->maintain();
 #endif
-  
+
   wordClockScene.loop();
 }
+
 
 
 
