@@ -16,6 +16,8 @@ class DisplayDriverFrickelClock : public IDisplayDriver, public IAnimator
 
     virtual int width();
     virtual int height();
+
+    virtual void setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) { }
     
     virtual void setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue);
     virtual void clearPixel(uint8_t x, uint8_t y);
