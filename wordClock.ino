@@ -7,16 +7,27 @@
 
 #include "NtpClient.h"
 #include "DisplayDriverFrickelClock.h"
+#include "DisplayDriver10x11Clock.h"
 #include "WordingStrategyStesie.h"
+#include "WordingStrategyEnglish.h"
 #include "WordClockScene.h"
 
 #ifdef ESP8266
 ESP8266WiFiMulti wifiMulti;
 #endif
 
+
+#if 1
+DisplayDriver10x11Clock driver;
+WordFactoryEnglish10x11Clock wordFactory;
+WordingStrategyEnglish strategy = { &wordFactory };
+#else
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
-WordClockScene *wordClockScene;
+WordingStrategyStesie strategy = { &wordFactory };
+#endif
+
+WordClockScene wordClockScene = { &driver, &driver, &strategy };
 
 void setup() {
   driver.setup();
@@ -31,8 +42,6 @@ void setup() {
 
   syncTime();
 #endif
-
-  wordClockScene = new WordClockScene(&driver, &driver, new WordingStrategyStesie(&wordFactory));
 }
 
 void loop() {
@@ -40,7 +49,7 @@ void loop() {
   wifiMulti.run();
 #endif
   
-  wordClockScene->loop();
+  wordClockScene.loop();
 }
 
 
