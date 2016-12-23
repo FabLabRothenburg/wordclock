@@ -7,6 +7,10 @@
 
 class DisplayDriverFrickelClock : public IDisplayDriver, public IAnimator
 {
+  private:
+    uint8_t pin = 5;
+    Adafruit_NeoPixel pixels = { 106, pin, NEO_GRB + NEO_KHZ800 };
+
   public:
     void setup();
 
