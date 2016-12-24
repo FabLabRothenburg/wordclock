@@ -5,6 +5,7 @@
 
 #include <TimeLib.h>
 
+#include "IncrementalAnimator.h"
 #include "NtpClient.h"
 #include "NullAnimator.h"
 #include "DisplayDriverFrickelClock.h"
@@ -31,7 +32,8 @@ WordFactoryFrickelClock wordFactory;
 WordingStrategyStesie strategy = { &wordFactory };
 #endif
 
-NullAnimator animator = { &driver };
+//NullAnimator animator = { &driver };
+IncrementalAnimator animator = { &driver };
 
 #if 0
 WordClockScene wordClockScene = { &animator, &strategy };
