@@ -14,7 +14,15 @@ int DisplayDriverFrickelClock::height() {
   return 10;
 }
 
+uint32_t DisplayDriverFrickelClock::getPixel(uint8_t x, uint8_t y) {
+  return pixels.getPixelColor(getPixelIndex(x, y));
+}
+
 void DisplayDriverFrickelClock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
+  pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
+}
+
+uint8_t DisplayDriverFrickelClock::getPixelIndex(uint8_t x, uint8_t y) {
   /* every second row is flipped */
   if ((y % 2) == 1) x = width() - 1 - x;
 
@@ -24,7 +32,7 @@ void DisplayDriverFrickelClock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint
   /* there are four pixels missing in the lowest row */
   if (n > 3) n -= 4;
 
-  pixels.setPixelColor(n, pixels.Color(red, green, blue));
+  return n;
 }
 
 void DisplayDriverFrickelClock::clearPixel(uint8_t x, uint8_t y) {

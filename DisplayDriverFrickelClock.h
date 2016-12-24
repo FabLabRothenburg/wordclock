@@ -19,11 +19,16 @@ class DisplayDriverFrickelClock : public IDisplayDriver, public IAnimator
 
     virtual void setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) { }
     
+    virtual uint32_t getPixel(uint8_t x, uint8_t y);
     virtual void setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue);
     virtual void clearPixel(uint8_t x, uint8_t y);
+
     void clear();
     
     virtual void show();
+
+  private:
+    uint8_t getPixelIndex(uint8_t x, uint8_t y);
 };
 
 #endif  /* !DISPLAY_DRIVER_FRICKEL_CLOCK_H */

@@ -25,7 +25,16 @@ void DisplayDriver10x11Clock::setDots(uint8_t count, uint8_t red, uint8_t green,
     pixels.setPixelColor(positions[i], 0);
 }
 
+uint32_t DisplayDriver10x11Clock::getPixel(uint8_t x, uint8_t y) {
+  return pixels.getPixelColor(getPixelIndex(x, y));
+}
+
 void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
+
+  pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
+}
+
+uint8_t DisplayDriver10x11Clock::getPixelIndex(uint8_t x, uint8_t y) {
   /* y axis is flipped if x is even */
   if ((x % 2) == 0)
     y = height() - 1 - y;
@@ -35,7 +44,7 @@ void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_
   /* there are two extra minute digit pixels before the matrix pixels */
   n += 2;
 
-  pixels.setPixelColor(n, pixels.Color(red, green, blue));
+  return n;
 }
 
 void DisplayDriver10x11Clock::clearPixel(uint8_t x, uint8_t y) {
@@ -49,7 +58,4 @@ void DisplayDriver10x11Clock::show() {
 void DisplayDriver10x11Clock::clear() {
   pixels.clear();
 }
-
-
-
 
