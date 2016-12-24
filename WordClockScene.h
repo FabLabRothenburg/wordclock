@@ -1,13 +1,12 @@
 #ifndef WORD_CLOCK_SCENE_H
 #define WORD_CLOCK_SCENE_H
 
-#include "IDisplayDriver.h"
+#include "IAnimator.h"
 #include "IWordingStrategy.h"
 #include "WordList.h"
 
 class WordClockScene {
   private:
-    IDisplayDriver *driver; 
     IAnimator *animator;
 
     uint8_t red = 255;
@@ -19,8 +18,8 @@ class WordClockScene {
 
     
   public:
-    WordClockScene(IDisplayDriver *driver, IAnimator *animator, IWordingStrategy *wordingStrategy)
-      : driver(driver), animator(animator), wordingStrategy(wordingStrategy) { }
+    WordClockScene(IAnimator *animator, IWordingStrategy *wordingStrategy)
+      : animator(animator), wordingStrategy(wordingStrategy) { }
     void loop();
 
     void setRed(uint8_t red) { this->red = red; }

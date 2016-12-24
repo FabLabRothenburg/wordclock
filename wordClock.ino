@@ -34,9 +34,9 @@ WordingStrategyStesie strategy = { &wordFactory };
 NullAnimator animator = { &driver };
 
 #if 0
-WordClockScene wordClockScene = { &driver, &animator, &strategy };
+WordClockScene wordClockScene = { &animator, &strategy };
 #else
-MockWordClockScene wordClockScene = { &driver, &animator, &strategy };
+MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
 #ifdef ESP8266

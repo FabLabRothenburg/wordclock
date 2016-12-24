@@ -4,11 +4,10 @@
 
 void WordClockScene::loop() {
   WordList wl = getWords();
-
-  animator->setDots(getDotsCount(), red, green, blue);
   
   wl.show(animator, red, green, blue);
-  driver->show();
+  animator->setDots(getDotsCount(), red, green, blue);
+  animator->commit();
   
   delay(1000);
   
