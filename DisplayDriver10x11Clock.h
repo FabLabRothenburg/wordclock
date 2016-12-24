@@ -5,7 +5,7 @@
 #include "IDisplayDriver.h"
 #include "IAnimator.h"
 
-class DisplayDriver10x11Clock : public IDisplayDriver, public IAnimator
+class DisplayDriver10x11Clock : public IDisplayDriver
 {
   private:
     uint8_t pin = 5;

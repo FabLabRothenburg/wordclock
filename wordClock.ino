@@ -6,6 +6,7 @@
 #include <TimeLib.h>
 
 #include "NtpClient.h"
+#include "NullAnimator.h"
 #include "DisplayDriverFrickelClock.h"
 #include "DisplayDriver10x11Clock.h"
 #include "MockWordClockScene.h"
@@ -30,10 +31,12 @@ WordFactoryFrickelClock wordFactory;
 WordingStrategyStesie strategy = { &wordFactory };
 #endif
 
+NullAnimator animator = { &driver };
+
 #if 0
-WordClockScene wordClockScene = { &driver, &driver, &strategy };
+WordClockScene wordClockScene = { &driver, &animator, &strategy };
 #else
-MockWordClockScene wordClockScene = { &driver, &driver, &strategy };
+MockWordClockScene wordClockScene = { &driver, &animator, &strategy };
 #endif
 
 #ifdef ESP8266
