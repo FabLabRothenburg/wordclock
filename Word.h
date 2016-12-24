@@ -16,6 +16,10 @@ class Word {
 
     void show(IAnimator *animator, uint8_t r, uint8_t g, uint8_t b) const;
     void hide(IAnimator *animator) const;
+
+    bool operator == (const Word& w) const {
+         return x == w.x && y == w.y && length == w.length;
+    }
 };
 
 #endif  /* !WORD_H */

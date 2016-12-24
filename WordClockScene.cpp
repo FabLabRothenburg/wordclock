@@ -3,15 +3,15 @@
 #include "WordClockScene.h"
 
 void WordClockScene::loop() {
-  WordList wl = getWords();
+  WordList nextWords = getWords();
   
-  wl.show(animator, red, green, blue);
+  nextWords.diff(currentWords).show(animator, red, green, blue);
+  currentWords.diff(nextWords).hide(animator);
+
   animator->setDots(getDotsCount(), red, green, blue);
   animator->commit();
   
-  delay(1000);
-  
-  wl.hide(animator);
+  currentWords = nextWords;
 }
 
 WordList WordClockScene::getWords() {

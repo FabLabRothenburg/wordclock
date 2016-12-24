@@ -13,6 +13,8 @@ class WordClockScene {
     uint8_t green = 255;
     uint8_t blue = 255;
 
+    WordList currentWords;
+
   protected:
     IWordingStrategy *wordingStrategy;
 

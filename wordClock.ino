@@ -72,10 +72,6 @@ void loop() {
 #endif
 
   wordClockScene.loop();
+  delay(1000);
 }
-
-
-
-
-
 

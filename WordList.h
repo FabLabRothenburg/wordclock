@@ -12,6 +12,8 @@ class WordList {
     void add(const Word w);
     void show(IAnimator *animator, uint8_t r, uint8_t g, uint8_t b) const;
     void hide(IAnimator *animator) const;
+
+    WordList diff(WordList &diffWords) const;
 };
 
 #endif  /* !WORD_LIST_H */
