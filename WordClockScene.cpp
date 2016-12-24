@@ -5,7 +5,7 @@
 void WordClockScene::loop() {
   WordList wl = getWords();
 
-  driver->setDots(getDotsCount(), red, green, blue);
+  animator->setDots(getDotsCount(), red, green, blue);
   
   wl.show(animator, red, green, blue);
   driver->show();
