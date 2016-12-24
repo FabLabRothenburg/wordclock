@@ -1,12 +1,11 @@
 #include <TimeLib.h>
 
 #include "WordClockScene.h"
-#include "WordList.h"
 
 void WordClockScene::loop() {
-  WordList wl = wordingStrategy->wordsForTime(hour(), minute());
+  WordList wl = getWords();
 
-  driver->setDots(minute() % 5, red, green, blue);
+  driver->setDots(getDotsCount(), red, green, blue);
   
   wl.show(animator, red, green, blue);
   driver->show();
@@ -16,4 +15,10 @@ void WordClockScene::loop() {
   wl.hide(animator);
 }
 
+WordList WordClockScene::getWords() {
+  return wordingStrategy->wordsForTime(hour(), minute());
+}
 
+uint8_t WordClockScene::getDotsCount() {
+  return minute() % 5;
+}

@@ -8,6 +8,7 @@
 #include "NtpClient.h"
 #include "DisplayDriverFrickelClock.h"
 #include "DisplayDriver10x11Clock.h"
+#include "MockWordClockScene.h"
 #include "MqttController.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
@@ -29,7 +30,11 @@ WordFactoryFrickelClock wordFactory;
 WordingStrategyStesie strategy = { &wordFactory };
 #endif
 
+#if 0
 WordClockScene wordClockScene = { &driver, &driver, &strategy };
+#else
+MockWordClockScene wordClockScene = { &driver, &driver, &strategy };
+#endif
 
 #ifdef ESP8266
 MqttController *mqttController = new MqttController(&wordClockScene, wifiClient);
