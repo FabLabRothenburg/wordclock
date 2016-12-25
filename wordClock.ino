@@ -5,8 +5,9 @@
 
 #include <TimeLib.h>
 
-#include "DisplayDriverFrickelClock.h"
 #include "DisplayDriver10x11Clock.h"
+#include "DisplayDriverFablabNeaClock.h"
+#include "DisplayDriverFrickelClock.h"
 #include "FallingStarAnimator.h"
 #include "IncrementalAnimator.h"
 #include "NtpClient.h"
@@ -23,8 +24,12 @@ WiFiClient wifiClient;
 #endif
 
 
-#if 1
+#if 0
 DisplayDriver10x11Clock driver;
+WordFactoryEnglish10x11Clock wordFactory;
+WordingStrategyEnglish strategy = { &wordFactory };
+#elif 1
+DisplayDriverFablabNeaClock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy = { &wordFactory };
 #else
