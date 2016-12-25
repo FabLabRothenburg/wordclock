@@ -74,7 +74,7 @@ WordList WordingStrategyFranken::wordsForTime(uint8_t hour, uint8_t minute) {
       break;
   }
 
-  if (minuteCluster >= 6)
+  if (minuteCluster == 3 || minuteCluster >= 5)
     hour ++;
 
   words.add(wordFactory->getWordForHour(hour));
