@@ -5,11 +5,12 @@
 
 #include <TimeLib.h>
 
+#include "DisplayDriverFrickelClock.h"
+#include "DisplayDriver10x11Clock.h"
+#include "FallingStarAnimator.h"
 #include "IncrementalAnimator.h"
 #include "NtpClient.h"
 #include "NullAnimator.h"
-#include "DisplayDriverFrickelClock.h"
-#include "DisplayDriver10x11Clock.h"
 #include "MockWordClockScene.h"
 #include "MqttController.h"
 #include "WordingStrategyStesie.h"
@@ -33,7 +34,8 @@ WordingStrategyStesie strategy = { &wordFactory };
 #endif
 
 //NullAnimator animator = { &driver };
-IncrementalAnimator animator = { &driver };
+//IncrementalAnimator animator = { &driver };
+FallingStarAnimator animator = { &driver };
 
 #if 0
 WordClockScene wordClockScene = { &animator, &strategy };
