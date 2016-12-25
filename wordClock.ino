@@ -16,6 +16,7 @@
 #include "MqttController.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
+#include "WordingStrategyFranken.h"
 #include "WordClockScene.h"
 
 #ifdef ESP8266
@@ -30,8 +31,8 @@ WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy = { &wordFactory };
 #elif 1
 DisplayDriverFablabNeaClock driver;
-WordFactoryEnglish10x11Clock wordFactory;
-WordingStrategyEnglish strategy = { &wordFactory };
+WordFactoryFrankenClock wordFactory;
+WordingStrategyFranken strategy = { &wordFactory };
 #else
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
