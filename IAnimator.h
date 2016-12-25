@@ -1,7 +1,7 @@
 #ifndef I_ANIMATOR_H
 #define I_ANIMATOR_H
 
-#include <Arduino.h>
+#include <stdint.h>
 
 class IAnimator
 {

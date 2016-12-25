@@ -14,6 +14,9 @@ class WordList {
     void hide(IAnimator *animator) const;
 
     WordList diff(WordList &diffWords) const;
+
+    const Word &getWord(uint8_t index) const { return words[index]; }
+    uint8_t getLength() const { return length; }
 };
 
 #endif  /* !WORD_LIST_H */

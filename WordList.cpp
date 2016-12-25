@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include <stdint.h>
 #include "WordList.h"
 
 void WordList::add(const Word w) {
@@ -19,17 +19,13 @@ WordList WordList::diff(WordList &diffWords) const {
   WordList result;
 
   for (uint8_t i = 0; i < length; i ++) {
-    uint8_t found = 0;
+    Word w = words[i];
 
-    for (uint8_t j = 0; j < diffWords.length; j ++) {
-      if (words[i] == diffWords.words[j]) {
-	found = 1;
-	break;
-      }
-    }
+    for (uint8_t j = 0; j < diffWords.length; j ++)
+      w = w.diff(diffWords.words[j]);
 
-    if (!found)
-      result.add(words[i]);
+    if (!w.isEmpty())
+      result.add(w);
   }
 
   return result;
