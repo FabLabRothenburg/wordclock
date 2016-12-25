@@ -43,7 +43,7 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
-#if 0
+#if 1
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };
@@ -55,6 +55,8 @@ MqttController *mqttController = new MqttController(&wordClockScene, wifiClient)
 
 void setup() {
   driver.setup();
+  wordClockScene.setRed(64);
+  wordClockScene.setBlue(0);
 
 #ifdef ESP8266
   Serial.begin(9600);
