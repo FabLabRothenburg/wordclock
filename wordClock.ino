@@ -29,7 +29,7 @@ WiFiClient wifiClient;
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy = { &wordFactory };
-#elif 1
+#elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactoryFrankenClock wordFactory;
 WordingStrategyFranken strategy = { &wordFactory };
@@ -43,7 +43,7 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
-#if 1
+#if 0
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };

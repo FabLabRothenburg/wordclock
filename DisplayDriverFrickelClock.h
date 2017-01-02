@@ -5,7 +5,7 @@
 #include "IDisplayDriver.h"
 #include "IAnimator.h"
 
-class DisplayDriverFrickelClock : public IDisplayDriver, public IAnimator
+class DisplayDriverFrickelClock : public IDisplayDriver
 {
   private:
     uint8_t pin = 5;
