@@ -25,6 +25,8 @@ WiFiClient wifiClient;
 #endif
 
 
+#define ENABLE_MQTT_LISTENER 0
+
 #if 0
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
@@ -49,7 +51,7 @@ WordClockScene wordClockScene = { &animator, &strategy };
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-#ifdef ESP8266
+#if ENABLE_MQTT_LISTENER
 MqttController *mqttController = new MqttController(&wordClockScene, wifiClient);
 #endif
 
@@ -69,7 +71,9 @@ void setup() {
   }
 
   syncTime();
+#endif
 
+#if ENABLE_MQTT_LISTENER
   mqttController->setServer({ 176, 9, 118, 134 });
   mqttController->setId("mqtt_client_id");
   mqttController->setUser("mqtt_user_name");
