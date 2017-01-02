@@ -2,10 +2,11 @@
 #define WORD_CLOCK_SCENE_H
 
 #include "IAnimator.h"
+#include "IColorControllable.h"
 #include "IWordingStrategy.h"
 #include "WordList.h"
 
-class WordClockScene {
+class WordClockScene : public IColorControllable {
   private:
     IAnimator *animator;
 
@@ -24,9 +25,9 @@ class WordClockScene {
       : animator(animator), wordingStrategy(wordingStrategy) { }
     void loop();
 
-    void setRed(uint8_t red) { this->red = red; }
-    void setGreen(uint8_t green) { this->green = green; }
-    void setBlue(uint8_t blue) { this->blue = blue; }
+    virtual void setRed(uint8_t red) { this->red = red; }
+    virtual void setGreen(uint8_t green) { this->green = green; }
+    virtual void setBlue(uint8_t blue) { this->blue = blue; }
 
   protected:
     virtual WordList getWords(void);

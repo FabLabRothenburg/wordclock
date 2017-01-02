@@ -45,7 +45,7 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
-#if 0
+#if 1
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };

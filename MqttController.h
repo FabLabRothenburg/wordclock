@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <PubSubClient.h>
 
-#include "WordClockScene.h"
+#include "IColorControllable.h"
 
 class MqttController {
   private:
@@ -12,10 +12,10 @@ class MqttController {
     const char *user;
     const char *password;
 
-    WordClockScene *wordClockScene;
+    IColorControllable *colorControllable;
 
   public:
-    MqttController(WordClockScene *wordClockScene, Client& client);
+    MqttController(IColorControllable *colorControllable, Client& client);
     
     void setServer(IPAddress ip, uint16_t port = 1883) { mqttClient.setServer(ip, port); }
     void maintain();

@@ -7,8 +7,8 @@ static void mqtt_message_handler(char* topic, byte* payload, unsigned int length
   mqttController->handle(topic, payload, length);
 }
 
-MqttController::MqttController(WordClockScene *wordClockScene, Client& client)
-  : wordClockScene(wordClockScene) {
+MqttController::MqttController(IColorControllable *colorControllable, Client& client)
+  : colorControllable(colorControllable) {
   mqttClient.setCallback(mqtt_message_handler);
   mqttClient.setClient(client);
 }
@@ -93,15 +93,15 @@ void MqttController::handle(char* topic, byte* payload, unsigned int length) {
 
   if (strncmp(ptr, "color/red", 9) == 0) {
     Serial.println("color change for RED");
-    wordClockScene->setRed(value);
+    colorControllable->setRed(value);
   }
   else if (strncmp(ptr, "color/green", 11) == 0) {
     Serial.println("color change for GREEN");
-    wordClockScene->setGreen(value);
+    colorControllable->setGreen(value);
   }
   else if (strncmp(ptr, "color/blue", 10) == 0) {
     Serial.println("color change for BLUE");
-    wordClockScene->setBlue(value);
+    colorControllable->setBlue(value);
   }
 }
 
