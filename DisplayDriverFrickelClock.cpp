@@ -19,6 +19,11 @@ uint32_t DisplayDriverFrickelClock::getPixel(uint8_t x, uint8_t y) {
 }
 
 void DisplayDriverFrickelClock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
+  if (y == 9) {
+    if (x >= 4 && x <= 7)
+      return;
+  }
+
   pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
 }
 
