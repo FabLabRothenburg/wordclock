@@ -57,8 +57,6 @@ MqttController *mqttController = new MqttController(&wordClockScene, wifiClient)
 
 void setup() {
   driver.setup();
-  wordClockScene.setRed(64);
-  wordClockScene.setBlue(0);
 
 #ifdef ESP8266
   Serial.begin(9600);
@@ -84,6 +82,9 @@ void setup() {
 void loop() {
 #ifdef ESP8266
   wifiMulti.run();
+#endif
+
+#if ENABLE_MQTT_LISTENER
   mqttController->maintain();
 #endif
 
