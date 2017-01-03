@@ -4,14 +4,7 @@
 
 void WordClockScene::loop() {
   WordList nextWords = getWords();
-  
-  nextWords.diff(currentWords).show(animator, red, green, blue);
-  currentWords.diff(nextWords).hide(animator);
-
-  animator->setDots(getDotsCount(), red, green, blue);
-  animator->commit();
-  
-  currentWords = nextWords;
+  showWords(nextWords);
 }
 
 WordList WordClockScene::getWords() {
@@ -21,3 +14,19 @@ WordList WordClockScene::getWords() {
 uint8_t WordClockScene::getDotsCount() {
   return minute() % 5;
 }
+
+void WordClockScene::showWords(WordList &nextWords) {
+  nextWords.diff(currentWords).show(animator, red, green, blue);
+  currentWords.diff(nextWords).hide(animator);
+
+  animator->setDots(getDotsCount(), red, green, blue);
+  animator->commit();
+  
+  currentWords = nextWords;
+}
+
+void WordClockScene::clearScreen() {
+  WordList noWords;
+  showWords(noWords);
+}
+

@@ -25,13 +25,17 @@ class WordClockScene : public IColorControllable {
       : animator(animator), wordingStrategy(wordingStrategy) { }
     void loop();
 
-    virtual void setRed(uint8_t red) { this->red = red; }
-    virtual void setGreen(uint8_t green) { this->green = green; }
-    virtual void setBlue(uint8_t blue) { this->blue = blue; }
+    virtual void setRed(uint8_t red) { this->red = red; clearScreen(); }
+    virtual void setGreen(uint8_t green) { this->green = green; clearScreen(); }
+    virtual void setBlue(uint8_t blue) { this->blue = blue; clearScreen(); }
 
   protected:
     virtual WordList getWords(void);
     virtual uint8_t getDotsCount(void);
+
+  private:
+    void showWords(WordList &nextWords);
+    void clearScreen();
 };
 
 #endif /* !WORD_CLOCK_SCENE_H */
