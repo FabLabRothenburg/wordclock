@@ -14,6 +14,7 @@
 #include "NullAnimator.h"
 #include "MockWordClockScene.h"
 #include "MqttController.h"
+#include "PersistentColors.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
@@ -25,7 +26,7 @@ WiFiClient wifiClient;
 #endif
 
 
-#define ENABLE_MQTT_LISTENER 0
+#define ENABLE_MQTT_LISTENER 1
 
 #if 0
 DisplayDriver10x11Clock driver;
@@ -45,14 +46,15 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
-#if 1
+#if 0
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
 #if ENABLE_MQTT_LISTENER
-MqttController *mqttController = new MqttController(&wordClockScene, wifiClient);
+PersistentColors persistentColors = { &wordClockScene };
+MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 #endif
 
 void setup() {
@@ -72,6 +74,8 @@ void setup() {
 #endif
 
 #if ENABLE_MQTT_LISTENER
+  persistentColors.setup();
+
   mqttController->setServer({ 176, 9, 118, 134 });
   mqttController->setId("mqtt_client_id");
   mqttController->setUser("mqtt_user_name");
