@@ -6,7 +6,6 @@
 #include <TimeLib.h>
 
 static IPAddress timeServer(132, 163, 4, 101); // time-a.timefreq.bldrdoc.gov
-static int timeZone = 1;
 static WiFiUDP Udp;
 
 static const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
@@ -53,7 +52,7 @@ static time_t getNtpTime()
       secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
       secsSince1900 |= (unsigned long)packetBuffer[43];
 
-      time_t result = secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR;
+      time_t result = secsSince1900 - 2208988800UL;
       Serial.println("NTP Timestamp: " + String(result));
       return result;
     }

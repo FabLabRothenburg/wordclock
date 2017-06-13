@@ -3,8 +3,6 @@
 #  include <ESP8266WiFiMulti.h>
 #endif
 
-#include <TimeLib.h>
-
 #include "DisplayDriver10x11Clock.h"
 #include "DisplayDriverFablabNeaClock.h"
 #include "DisplayDriverFrickelClock.h"
