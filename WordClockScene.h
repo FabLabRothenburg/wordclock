@@ -1,6 +1,8 @@
 #ifndef WORD_CLOCK_SCENE_H
 #define WORD_CLOCK_SCENE_H
 
+#include <Time.h>
+#include <Timezone.h>  // https://github.com/JChristensen/Timezone
 #include "IAnimator.h"
 #include "IColorControllable.h"
 #include "IWordingStrategy.h"
@@ -30,11 +32,12 @@ class WordClockScene : public IColorControllable {
     virtual void setBlue(uint8_t blue) { this->blue = blue; clearScreen(); }
 
   protected:
-    virtual WordList getWords(void);
-    virtual uint8_t getDotsCount(void);
+    virtual WordList getWords(time_t time);
+    virtual uint8_t getDotsCount(time_t time);
+    time_t getLocalTime();
 
   private:
-    void showWords(WordList &nextWords);
+    void showWords(WordList &nextWords, time_t time);
     void clearScreen();
 };
 
