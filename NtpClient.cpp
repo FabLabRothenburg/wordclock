@@ -5,14 +5,15 @@
 #include <WiFiUdp.h>
 #include <TimeLib.h>
 
-static IPAddress timeServer(132, 163, 4, 101); // time-a.timefreq.bldrdoc.gov
+//static IPAddress timeServer(78, 46, 189, 152);
+static const char *timeServer = "0.de.pool.ntp.org";
 static WiFiUDP Udp;
 
 static const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
 static byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming & outgoing packets
 
 // send an NTP request to the time server at the given address
-static void sendNTPpacket(IPAddress &address)
+static void sendNTPpacket()
 {
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
@@ -29,7 +30,7 @@ static void sendNTPpacket(IPAddress &address)
   packetBuffer[15]  = 52;
   // all NTP fields have been given values, now
   // you can send a packet requesting a timestamp:
-  Udp.beginPacket(address, 123); //NTP requests are to port 123
+  Udp.beginPacket(timeServer, 123); //NTP requests are to port 123
   Udp.write(packetBuffer, NTP_PACKET_SIZE);
   Udp.endPacket();
 }
@@ -38,7 +39,7 @@ static time_t getNtpTime()
 {
   while (Udp.parsePacket() > 0) ; // discard any previously received packets
   Serial.println("Transmit NTP Request");
-  sendNTPpacket(timeServer);
+  sendNTPpacket();
   uint32_t beginWait = millis();
   while (millis() - beginWait < 1500) {
     int size = Udp.parsePacket();
