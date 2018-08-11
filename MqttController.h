@@ -17,7 +17,7 @@ class MqttController {
   public:
     MqttController(IColorControllable *colorControllable, Client& client);
     
-    void setServer(IPAddress ip, uint16_t port = 1883) { mqttClient.setServer(ip, port); }
+    void setServer(const char *domain, uint16_t port = 1883) { mqttClient.setServer(domain, port); }
     void maintain();
 
     void setId(const char *id) { this->id = id; }

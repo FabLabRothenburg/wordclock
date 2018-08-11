@@ -14,6 +14,18 @@ class PersistentStorage
     uint8_t blue;
 
     struct {
+      char ssid[16];
+      char password[64];
+    } wifi;
+
+    struct {
+      char domain[32];
+      char clientId[16];
+      char user[16];
+      char password[16];
+    } mqtt;
+
+    struct {
       unsigned int mqttEnabled : 1;
     } flags;
 

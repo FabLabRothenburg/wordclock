@@ -48,6 +48,7 @@ void PersistentStorage::setup() {
 }
 
 void PersistentStorage::resetToDefaults() {
+  memset(this, 0, sizeof(PersistentStorage));
   magicValue = PERSISTENT_STORAGE_MAGIC_VALUE;
 
   red = PERSISTENT_STORAGE_DEFAULT_RED;

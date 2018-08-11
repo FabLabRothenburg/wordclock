@@ -62,8 +62,7 @@ void setup() {
   persistentStorage.setup();
 
 #ifdef ESP8266
-  // TODO  Configure your WLAN networks here
-  wifiMulti.addAP("wifiname", "wifiPassword");
+  wifiMulti.addAP(persistentStorage.wifi.ssid, persistentStorage.wifi.password);
 
   while (wifiMulti.run() != WL_CONNECTED) {
     delay(500);
@@ -75,10 +74,10 @@ void setup() {
   persistentColors.setup();
 
   if (persistentStorage.flags.mqttEnabled) {
-    mqttController->setServer({ 176, 9, 118, 134 });
-    mqttController->setId("mqtt_client_id");
-    mqttController->setUser("mqtt_user_name");
-    mqttController->setPassword("mqtt_password");
+    mqttController->setServer(persistentStorage.mqtt.domain);
+    mqttController->setId(persistentStorage.mqtt.clientId);
+    mqttController->setUser(persistentStorage.mqtt.user);
+    mqttController->setPassword(persistentStorage.mqtt.password);
   }
 }
 
