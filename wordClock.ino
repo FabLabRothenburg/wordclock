@@ -7,6 +7,7 @@
 #include "DisplayDriverFrickelClock.h"
 #include "FallingStarAnimator.h"
 #include "IncrementalAnimator.h"
+#include "HttpController.h"
 #include "NtpClient.h"
 #include "NullAnimator.h"
 #include "MockWordClockScene.h"
@@ -94,6 +95,7 @@ void setup() {
 #endif
 
   persistentColors.setup();
+  httpController.setup();
 
   if (persistentStorage.flags.mqttEnabled) {
     mqttController->setServer(persistentStorage.mqtt.domain);
@@ -107,6 +109,8 @@ void loop() {
   if (persistentStorage.flags.mqttEnabled) {
     mqttController->maintain();
   }
+
+  httpController.maintain();
 
   wordClockScene.loop();
   delay(1000);
