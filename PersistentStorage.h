@@ -13,6 +13,10 @@ class PersistentStorage
     uint8_t green;
     uint8_t blue;
 
+    struct {
+      unsigned int mqttEnabled : 1;
+    } flags;
+
     void setup();
     void resetToDefaults();
     void commit();

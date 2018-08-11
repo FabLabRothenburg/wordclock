@@ -25,9 +25,6 @@ WiFiClient wifiClient;
 
 PersistentStorage persistentStorage;
 
-
-#define ENABLE_MQTT_LISTENER 1
-
 #if 0
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
@@ -46,23 +43,25 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
-#if 0
+#if 1
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-#if ENABLE_MQTT_LISTENER
 PersistentColors persistentColors = { &persistentStorage, &wordClockScene };
 MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
-#endif
 
 void setup() {
   driver.setup();
 
 #ifdef ESP8266
   Serial.begin(9600);
+#endif
 
+  persistentStorage.setup();
+
+#ifdef ESP8266
   // TODO  Configure your WLAN networks here
   wifiMulti.addAP("wifiname", "wifiPassword");
 
@@ -73,16 +72,14 @@ void setup() {
   syncTime();
 #endif
 
-  persistentStorage.setup();
-
-#if ENABLE_MQTT_LISTENER
   persistentColors.setup();
 
-  mqttController->setServer({ 176, 9, 118, 134 });
-  mqttController->setId("mqtt_client_id");
-  mqttController->setUser("mqtt_user_name");
-  mqttController->setPassword("mqtt_password");
-#endif
+  if (persistentStorage.flags.mqttEnabled) {
+    mqttController->setServer({ 176, 9, 118, 134 });
+    mqttController->setId("mqtt_client_id");
+    mqttController->setUser("mqtt_user_name");
+    mqttController->setPassword("mqtt_password");
+  }
 }
 
 void loop() {
@@ -90,9 +87,9 @@ void loop() {
   wifiMulti.run();
 #endif
 
-#if ENABLE_MQTT_LISTENER
-  mqttController->maintain();
-#endif
+  if (persistentStorage.flags.mqttEnabled) {
+    mqttController->maintain();
+  }
 
   wordClockScene.loop();
   delay(1000);

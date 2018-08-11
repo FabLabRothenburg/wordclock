@@ -1,11 +1,13 @@
 #include <EEPROM.h>
 #include "PersistentStorage.h"
 
-#define PERSISTENT_STORAGE_MAGIC_VALUE	0x42
+#define PERSISTENT_STORAGE_MAGIC_VALUE            0x42
 
-#define PERSISTENT_STORAGE_DEFAULT_RED	140
-#define PERSISTENT_STORAGE_DEFAULT_GREEN	64
-#define PERSISTENT_STORAGE_DEFAULT_BLUE	0
+#define PERSISTENT_STORAGE_DEFAULT_RED            140
+#define PERSISTENT_STORAGE_DEFAULT_GREEN          64
+#define PERSISTENT_STORAGE_DEFAULT_BLUE           0
+
+#define PERSISTENT_STORAGE_FLAGS_MQTT_ENABLED     0
 
 
 static uint8_t crcUpdate(uint8_t crc, uint8_t data) {
@@ -51,6 +53,8 @@ void PersistentStorage::resetToDefaults() {
   red = PERSISTENT_STORAGE_DEFAULT_RED;
   green = PERSISTENT_STORAGE_DEFAULT_GREEN;
   blue = PERSISTENT_STORAGE_DEFAULT_BLUE;
+
+  flags.mqttEnabled = PERSISTENT_STORAGE_FLAGS_MQTT_ENABLED;
 
   commit();
 }
