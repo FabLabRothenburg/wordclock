@@ -1,6 +1,5 @@
 #ifdef ESP8266
 #  include <ESP8266WiFi.h>
-#  include <ESP8266WiFiMulti.h>
 #endif
 
 #include "DisplayDriver10x11Clock.h"
@@ -19,7 +18,6 @@
 #include "WordClockScene.h"
 
 #ifdef ESP8266
-ESP8266WiFiMulti wifiMulti;
 WiFiClient wifiClient;
 #endif
 
@@ -52,6 +50,37 @@ MockWordClockScene wordClockScene = { &animator, &strategy };
 PersistentColors persistentColors = { &persistentStorage, &wordClockScene };
 MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 
+static void setupWifiAP() {
+  IPAddress apIP(192, 168, 4, 1);
+  IPAddress netMsk(255, 255, 255, 0);
+
+  char ssid[32];
+  sprintf(ssid, "wordclock-%d", ESP.getChipId());
+
+  WiFi.softAPConfig(apIP, apIP, netMsk);
+  WiFi.softAP(ssid);
+}
+
+static void setupWifi() {
+  if (persistentStorage.wifi.ssid[0] != 0) {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(persistentStorage.wifi.ssid, persistentStorage.wifi.password);
+
+    int retry_count = 0;
+    while (WiFi.status() != WL_CONNECTED && retry_count < 20) {
+      delay(500);
+      Serial.print(".");
+      retry_count ++;
+    }
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    syncTime();
+  } else {
+    setupWifiAP();
+  }
+}
+
 void setup() {
   driver.setup();
 
@@ -62,13 +91,7 @@ void setup() {
   persistentStorage.setup();
 
 #ifdef ESP8266
-  wifiMulti.addAP(persistentStorage.wifi.ssid, persistentStorage.wifi.password);
-
-  while (wifiMulti.run() != WL_CONNECTED) {
-    delay(500);
-  }
-
-  syncTime();
+  setupWifi();
 #endif
 
   persistentColors.setup();
@@ -82,10 +105,6 @@ void setup() {
 }
 
 void loop() {
-#ifdef ESP8266
-  wifiMulti.run();
-#endif
-
   if (persistentStorage.flags.mqttEnabled) {
     mqttController->maintain();
   }
