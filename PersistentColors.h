@@ -3,15 +3,16 @@
 
 #include <stdint.h>
 #include "IColorControllable.h"
+#include "PersistentStorage.h"
 
 class PersistentColors: public IColorControllable
 {
+    PersistentStorage *persistentStorage;
     IColorControllable *colorControllable;
-    bool needCommit = false;
 
   public:
-    PersistentColors(IColorControllable *colorControllable)
-      : colorControllable(colorControllable) { }
+    PersistentColors(PersistentStorage *persistentStorage, IColorControllable *colorControllable)
+      : persistentStorage(persistentStorage), colorControllable(colorControllable) { }
 
     void setup();
 

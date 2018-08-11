@@ -23,6 +23,8 @@ ESP8266WiFiMulti wifiMulti;
 WiFiClient wifiClient;
 #endif
 
+PersistentStorage persistentStorage;
+
 
 #define ENABLE_MQTT_LISTENER 1
 
@@ -51,7 +53,7 @@ MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
 #if ENABLE_MQTT_LISTENER
-PersistentColors persistentColors = { &wordClockScene };
+PersistentColors persistentColors = { &persistentStorage, &wordClockScene };
 MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 #endif
 
@@ -70,6 +72,8 @@ void setup() {
 
   syncTime();
 #endif
+
+  persistentStorage.setup();
 
 #if ENABLE_MQTT_LISTENER
   persistentColors.setup();
