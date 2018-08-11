@@ -13,6 +13,7 @@
 
 #define PERSISTENT_STORAGE_FLAGS_MQTT_ENABLED     0
 
+PersistentStorage persistentStorage;
 
 static uint8_t crcUpdate(uint8_t crc, uint8_t data) {
   uint8_t i;

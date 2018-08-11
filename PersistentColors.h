@@ -7,12 +7,11 @@
 
 class PersistentColors: public IColorControllable
 {
-    PersistentStorage *persistentStorage;
     IColorControllable *colorControllable;
 
   public:
-    PersistentColors(PersistentStorage *persistentStorage, IColorControllable *colorControllable)
-      : persistentStorage(persistentStorage), colorControllable(colorControllable) { }
+    PersistentColors(IColorControllable *colorControllable)
+      : colorControllable(colorControllable) { }
 
     void setup();
 

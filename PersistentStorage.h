@@ -42,12 +42,7 @@ class PersistentStorage
     uint8_t calculateCrc();
 };
 
+extern PersistentStorage persistentStorage;
 
 #endif  /* !I_PERSISTENT_STORAGE_H */
-
-
-
-
-
-
 

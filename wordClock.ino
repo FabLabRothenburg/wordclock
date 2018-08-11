@@ -12,6 +12,7 @@
 #include "MockWordClockScene.h"
 #include "MqttController.h"
 #include "PersistentColors.h"
+#include "PersistentStorage.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
@@ -20,8 +21,6 @@
 #ifdef ESP8266
 WiFiClient wifiClient;
 #endif
-
-PersistentStorage persistentStorage;
 
 #if 0
 DisplayDriver10x11Clock driver;
@@ -47,7 +46,7 @@ WordClockScene wordClockScene = { &animator, &strategy };
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-PersistentColors persistentColors = { &persistentStorage, &wordClockScene };
+PersistentColors persistentColors = { &wordClockScene };
 MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 
 static void setupWifiAP() {
