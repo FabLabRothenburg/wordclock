@@ -85,7 +85,7 @@ void setup() {
   driver.setup();
 
 #ifdef ESP8266
-  Serial.begin(9600);
+  Serial.begin(115200);
 #endif
 
   persistentStorage.setup();

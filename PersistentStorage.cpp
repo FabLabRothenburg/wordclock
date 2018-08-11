@@ -1,3 +1,7 @@
+#ifdef ESP8266
+#  include <ESP8266WiFi.h>
+#endif
+
 #include <EEPROM.h>
 #include "PersistentStorage.h"
 
@@ -36,13 +40,18 @@ uint8_t PersistentStorage::calculateCrc() {
 }
 
 void PersistentStorage::setup() {
-  EEPROM.begin(0);
+  EEPROM.begin(sizeof(PersistentStorage));
 
+  Serial.println("restoring " + String(sizeof(PersistentStorage)) + " bytes from EEPROM");
   for (uint8_t i = 0; i < sizeof(PersistentStorage); i ++) {
     ((uint8_t *)this)[i] = EEPROM.read(i);
   }
 
+  Serial.println("restored eeprom data, stored magic: " + String(magicValue));
+  Serial.println("stored crc: " + String(crc));
+  Serial.println("calculated crc: " + String(calculateCrc()));
   if (crc != calculateCrc() || magicValue != PERSISTENT_STORAGE_MAGIC_VALUE) {
+    Serial.println("restoring defaults");
     resetToDefaults();
   }
 }
@@ -64,11 +73,13 @@ void PersistentStorage::resetToDefaults() {
 
 void PersistentStorage::commit() {
   crc = calculateCrc();
+  Serial.println("updated crc to " + String(crc));
 
   for (uint8_t i = 0; i < sizeof(PersistentStorage); i ++) {
     EEPROM.write(i, ((uint8_t *)this)[i]);
   }
 
+  Serial.println("stored data to EEPROM.");
   EEPROM.commit();
 }
 
