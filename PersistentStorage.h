@@ -26,6 +26,10 @@ class PersistentStorage
     } mqtt;
 
     struct {
+      char domain[32];
+    } ntp;
+
+    struct {
       unsigned int mqttEnabled : 1;
     } flags;
 

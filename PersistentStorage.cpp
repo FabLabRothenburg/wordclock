@@ -55,6 +55,8 @@ void PersistentStorage::resetToDefaults() {
   green = PERSISTENT_STORAGE_DEFAULT_GREEN;
   blue = PERSISTENT_STORAGE_DEFAULT_BLUE;
 
+  strcpy(ntp.domain, "0.de.pool.ntp.org");
+
   flags.mqttEnabled = PERSISTENT_STORAGE_FLAGS_MQTT_ENABLED;
 
   commit();

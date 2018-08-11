@@ -5,8 +5,8 @@
 #include <WiFiUdp.h>
 #include <TimeLib.h>
 
-//static IPAddress timeServer(78, 46, 189, 152);
-static const char *timeServer = "0.de.pool.ntp.org";
+#include "PersistentStorage.h"
+
 static WiFiUDP Udp;
 
 static const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
@@ -30,7 +30,7 @@ static void sendNTPpacket()
   packetBuffer[15]  = 52;
   // all NTP fields have been given values, now
   // you can send a packet requesting a timestamp:
-  Udp.beginPacket(timeServer, 123); //NTP requests are to port 123
+  Udp.beginPacket(persistentStorage.ntp.domain, 123); //NTP requests are to port 123
   Udp.write(packetBuffer, NTP_PACKET_SIZE);
   Udp.endPacket();
 }
