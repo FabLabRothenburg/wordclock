@@ -4,15 +4,15 @@
 #include <Arduino.h>
 
 #include "IWordingStrategy.h"
-#include "WordFactoryFrankenClock.h"
+#include "IWordFactoryFrankenClock.h"
 #include "WordList.h"
 
 class WordingStrategyFranken : public IWordingStrategy {
   private:
-    const WordFactoryFrankenClock *wordFactory;
+    const IWordFactoryFrankenClock *wordFactory;
 
   public:
-    WordingStrategyFranken(const WordFactoryFrankenClock *wordFactory)
+    WordingStrategyFranken(const IWordFactoryFrankenClock *wordFactory)
       : wordFactory(wordFactory) {
     }
 

@@ -1,27 +1,27 @@
 #ifndef WORD_FACTORY_FRANKEN_CLOCK_H
 #define WORD_FACTORY_FRANKEN_CLOCK_H
 
-#include "Word.h"
+#include "IWordFactoryFrankenClock.h"
 
-class WordFactoryFrankenClock {
+class WordFactoryFrankenClock : public IWordFactoryFrankenClock {
   public:
-    const Word getWordES() const;
-    const Word getWordIST() const;
-    const Word getWordFUENF() const;
-    const Word getWordZEHN() const;
-    const Word getWordZWANZIG() const;
+    virtual const Word getWordES() const;
+    virtual const Word getWordIST() const;
+    virtual const Word getWordFUENF() const;
+    virtual const Word getWordZEHN() const;
+    virtual const Word getWordZWANZIG() const;
 
-    const Word getWordVIERTEL() const;
-    const Word getWordHALB() const;
-    const Word getWordDREIVIERTEL() const;
+    virtual const Word getWordVIERTEL() const;
+    virtual const Word getWordHALB() const;
+    virtual const Word getWordDREIVIERTEL() const;
 
-    const Word getWordVOR() const;
-    const Word getWordNACH() const;
+    virtual const Word getWordVOR() const;
+    virtual const Word getWordNACH() const;
 
-    const Word getWordEIN() const;
-    const Word getWordUHR() const;
+    virtual const Word getWordEIN() const;
+    virtual const Word getWordUHR() const;
 
-    const Word getWordForHour(uint8_t hour) const;
+    virtual const Word getWordForHour(uint8_t hour) const;
 };
 
 #endif  /* !WORD_FACTORY_FRANKEN_CLOCK_H */
