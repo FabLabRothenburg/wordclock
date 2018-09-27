@@ -14,6 +14,7 @@
 #include "MqttController.h"
 #include "PersistentColors.h"
 #include "PersistentStorage.h"
+#include "WordFactoryGermanV2Clock.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
@@ -27,6 +28,10 @@ WiFiClient wifiClient;
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy = { &wordFactory };
+#elif 1
+DisplayDriverFablabNeaClock driver;
+WordFactoryGermanV2Clock wordFactory;
+WordingStrategyFranken strategy = { &wordFactory };
 #elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactoryFrankenClock wordFactory;
