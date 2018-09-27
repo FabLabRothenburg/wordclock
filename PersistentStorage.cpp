@@ -31,7 +31,7 @@ static uint8_t crcUpdate(uint8_t crc, uint8_t data) {
 }
 
 uint8_t PersistentStorage::calculateCrc() {
-  uint8_t crc;
+  uint8_t crc = 0;
 
   for (uint8_t i = 0; i < offsetof(PersistentStorage, crc); i ++) {
     crc = crcUpdate(crc, ((uint8_t *) this)[i]);
