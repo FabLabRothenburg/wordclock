@@ -13,8 +13,8 @@ class MockWordClockScene : public WordClockScene {
       : WordClockScene(animator, wordingStrategy) { }
 
   protected:
-    virtual WordList getWords(void);
-    virtual uint8_t getDotsCount(void);
+    virtual WordList getWords(time_t time);
+    virtual uint8_t getDotsCount(time_t time);
 };
 
 #endif /* !MOCK_WORD_CLOCK_SCENE_H */

@@ -1,6 +1,6 @@
 #include "MockWordClockScene.h"
 
-WordList MockWordClockScene::getWords() {
+WordList MockWordClockScene::getWords(time_t time) {
   minute ++;
 
   if (minute >= 60) {
@@ -15,6 +15,6 @@ WordList MockWordClockScene::getWords() {
   return wordingStrategy->wordsForTime(hour, minute);
 }
 
-uint8_t MockWordClockScene::getDotsCount() {
+uint8_t MockWordClockScene::getDotsCount(time_t time) {
   return minute % 5;
 }
