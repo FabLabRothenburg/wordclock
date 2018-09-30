@@ -112,8 +112,6 @@ void setup() {
   httpController.setup();
 
   if (persistentStorage.flags.mqttEnabled) {
-    MDNS.addService("mqtt", "tcp", 1883);
-
     mqttController->setServer(persistentStorage.mqtt.domain);
     mqttController->setId(persistentStorage.mqtt.clientId);
     mqttController->setUser(persistentStorage.mqtt.user);
