@@ -14,12 +14,12 @@ int DisplayDriver10x11Clock::height() {
   return 10;
 }
 
-void DisplayDriver10x11Clock::setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) {
+void DisplayDriver10x11Clock::setDots(uint8_t count, uint32_t color) {
   uint8_t positions[4] = { 0, 1, 112, 113 };
   uint8_t i = 0;
 
   for (; i < count; i ++)
-    pixels.setPixelColor(positions[i], pixels.Color(red, green, blue));
+    pixels.setPixelColor(positions[i], color);
 
   for (; i < 4; i ++)
     pixels.setPixelColor(positions[i], 0);
@@ -29,9 +29,9 @@ uint32_t DisplayDriver10x11Clock::getPixel(uint8_t x, uint8_t y) {
   return pixels.getPixelColor(getPixelIndex(x, y));
 }
 
-void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
+void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint32_t color) {
 
-  pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
+  pixels.setPixelColor(getPixelIndex(x, y), color);
 }
 
 uint8_t DisplayDriver10x11Clock::getPixelIndex(uint8_t x, uint8_t y) {
@@ -47,15 +47,7 @@ uint8_t DisplayDriver10x11Clock::getPixelIndex(uint8_t x, uint8_t y) {
   return n;
 }
 
-void DisplayDriver10x11Clock::clearPixel(uint8_t x, uint8_t y) {
-  setPixel(x, y, 0, 0, 0);
-}
-
 void DisplayDriver10x11Clock::show() {
   pixels.show();
-}
-
-void DisplayDriver10x11Clock::clear() {
-  pixels.clear();
 }
 
