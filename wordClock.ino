@@ -1,5 +1,7 @@
 #ifdef ESP8266
 #  include <ESP8266WiFi.h>
+#  include <ArduinoOTA.h>
+#  include <ESP8266mDNS.h>
 #endif
 
 #include "DisplayDriver10x11Clock.h"
@@ -60,7 +62,7 @@ static void setupWifiAP() {
   IPAddress netMsk(255, 255, 255, 0);
 
   char ssid[32];
-  sprintf(ssid, "wordclock-%d", ESP.getChipId());
+  sprintf(ssid, "wordclock-%06x", ESP.getChipId());
 
   WiFi.softAPConfig(apIP, apIP, netMsk);
   WiFi.softAP(ssid);
@@ -97,6 +99,13 @@ void setup() {
 
 #ifdef ESP8266
   setupWifi();
+
+  char tmp[32];
+  sprintf(tmp, "wordclock-%06x", ESP.getChipId());
+  ArduinoOTA.setHostname(tmp);
+  ArduinoOTA.begin();
+
+  MDNS.addService("http", "tcp", 80);
 #endif
 
   persistentColors.setup();
@@ -111,11 +120,28 @@ void setup() {
 }
 
 void loop() {
+#ifdef ESP8266
+  if (persistentStorage.wifi.ssid[0] != 0 && WiFi.status() != WL_CONNECTED) {
+    Serial.println("Connection lost, reconnecting");
+    WiFi.reconnect();
+
+    int retry_count = 0;
+    while (WiFi.status() != WL_CONNECTED && retry_count < 20) {
+      delay(500);
+      Serial.print(".");
+      retry_count ++;
+    }
+  }
+
   if (persistentStorage.flags.mqttEnabled) {
     mqttController->maintain();
   }
 
+  MDNS.update();
+  ArduinoOTA.handle();
+
   httpController.maintain();
+#endif
 
   wordClockScene.loop();
   delay(1000);
