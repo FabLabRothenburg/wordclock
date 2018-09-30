@@ -123,6 +123,18 @@ void setup() {
 
 void loop() {
 #ifdef ESP8266
+  if (persistentStorage.wifi.ssid[0] != 0 && WiFi.status() != WL_CONNECTED) {
+    Serial.println("Connection lost, reconnecting");
+    WiFi.reconnect();
+
+    int retry_count = 0;
+    while (WiFi.status() != WL_CONNECTED && retry_count < 20) {
+      delay(500);
+      Serial.print(".");
+      retry_count ++;
+    }
+  }
+
   if (persistentStorage.flags.mqttEnabled) {
     mqttController->maintain();
   }
