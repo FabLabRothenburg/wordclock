@@ -36,6 +36,17 @@ void DiyHueController::setBlue(uint8_t blue) {
   process_lightdata(FALLBACK_TRANSITION_TIME);
 }
 
+void DiyHueController::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
+  rgb[0] = red;
+  rgb[1] = green;
+  rgb[2] = blue;
+  color_mode = 0;
+
+  // force re-calculation (in case caller isn't aware of specific necessities)
+  process_lightdata(FALLBACK_TRANSITION_TIME);
+}
+
+
 void DiyHueController::setColorX(float x) {
   this->x = x;
   color_mode = 1;
@@ -264,9 +275,6 @@ void DiyHueController::maintain() {
 }
 
 void DiyHueController::apply_colors() {
-  // @TODO perform just a single update!?
-  controllable->setRed(current_rgb[0]);
-  controllable->setGreen(current_rgb[1]);
-  controllable->setBlue(current_rgb[2]);
+  controllable->setRGB(current_rgb[0], current_rgb[1], current_rgb[2]);
 }
 

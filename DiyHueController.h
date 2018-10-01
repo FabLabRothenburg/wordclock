@@ -31,6 +31,7 @@ class DiyHueController : public IColorControllable {
     virtual void setRed(uint8_t red);
     virtual void setGreen(uint8_t green);
     virtual void setBlue(uint8_t blue);
+    virtual void setRGB(uint8_t red, uint8_t green, uint8_t blue);
 
     void setColorX(float x);
     void setColorY(float y);

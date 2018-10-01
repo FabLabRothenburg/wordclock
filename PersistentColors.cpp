@@ -26,3 +26,13 @@ void PersistentColors::setBlue(uint8_t blue) {
   persistentStorage.blue = blue;
   persistentStorage.commit();
 }
+
+void PersistentColors::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
+  colorControllable->setRGB(red, green, blue);
+
+  persistentStorage.red = red;
+  persistentStorage.green = green;
+  persistentStorage.blue = blue;
+  persistentStorage.commit();
+}
+

@@ -43,6 +43,19 @@ void NullAnimator::setBlue(uint8_t blue) {
   this->blue = blue;
 }
 
+void NullAnimator::setRGB(uint8_t red, uint8_t green, uint8_t blue) {
+  if (red == 0 && green == 0 && blue == 0) {
+    blue = 1; // don't actually turn off the last LED
+  }
+
+  updateColors(pack(this->red, this->green, this->blue), pack(red, green, blue));
+
+  this->red = red;
+  this->green = green;
+  this->blue = blue;
+}
+
+
 void NullAnimator::updateColors(uint32_t oldColor, uint32_t newColor) {
   if (oldColor == 0) {
     // don't update if old color was black, otherwise all LEDs would be enabled

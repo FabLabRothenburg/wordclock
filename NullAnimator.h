@@ -20,6 +20,7 @@ class NullAnimator: public IAnimator
     virtual void setRed(uint8_t red);
     virtual void setGreen(uint8_t green);
     virtual void setBlue(uint8_t blue);
+    virtual void setRGB(uint8_t red, uint8_t green, uint8_t blue);
 
     virtual void setDots(uint8_t count);
     virtual void setPixel(uint8_t x, uint8_t y);
