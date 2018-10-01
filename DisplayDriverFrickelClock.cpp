@@ -18,13 +18,13 @@ uint32_t DisplayDriverFrickelClock::getPixel(uint8_t x, uint8_t y) {
   return pixels.getPixelColor(getPixelIndex(x, y));
 }
 
-void DisplayDriverFrickelClock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
+void DisplayDriverFrickelClock::setPixel(uint8_t x, uint8_t y, uint32_t color) {
   if (y == 9) {
     if (x >= 4 && x <= 7)
       return;
   }
 
-  pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
+  pixels.setPixelColor(getPixelIndex(x, y), color);
 }
 
 uint8_t DisplayDriverFrickelClock::getPixelIndex(uint8_t x, uint8_t y) {
@@ -40,17 +40,7 @@ uint8_t DisplayDriverFrickelClock::getPixelIndex(uint8_t x, uint8_t y) {
   return n;
 }
 
-void DisplayDriverFrickelClock::clearPixel(uint8_t x, uint8_t y) {
-  setPixel(x, y, 0, 0, 0);
-}
-
 void DisplayDriverFrickelClock::show() {
   pixels.show();
 }
-
-void DisplayDriverFrickelClock::clear() {
-  pixels.clear();
-}
-
-
 

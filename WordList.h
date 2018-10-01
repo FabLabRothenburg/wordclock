@@ -10,7 +10,7 @@ class WordList {
 
   public:
     void add(const Word w);
-    void show(IAnimator *animator, uint8_t r, uint8_t g, uint8_t b) const;
+    void show(IAnimator *animator) const;
     void hide(IAnimator *animator) const;
 
     WordList diff(WordList &diffWords) const;

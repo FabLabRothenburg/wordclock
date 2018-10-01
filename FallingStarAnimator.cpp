@@ -19,7 +19,7 @@ bool FallingStar::animate() {
   }
 
   if (applied)
-    driver->clearPixel(x, y);
+    driver->setPixel(x, y, 0);
 
   y ++;
 
@@ -44,24 +44,15 @@ bool FallingStar::animate() {
   b *= FALLING_STAR_FACTOR;
 
   color = ((uint32_t)r << 16) | ((uint32_t)g <<  8) | ((uint32_t)b <<  0);
-
-  driver->setPixel(x, y, r, g, b);
+  driver->setPixel(x, y, color);
   applied = true;
   return false;
-}
-
-void FallingStarAnimator::setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) {
-  driver->setDots(count, red, green, blue);
-}
-
-void FallingStarAnimator::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
-  driver->setPixel(x, y, red, green, blue);
 }
 
 void FallingStarAnimator::clearPixel(uint8_t x, uint8_t y) {
   if (starCount == FALLING_STAR_LIMIT) {
     Serial.print("FALLING_STAR_LIMIT reached\n");
-    driver->clearPixel(x, y);
+    driver->setPixel(x, y, 0);
     return;
   }
   

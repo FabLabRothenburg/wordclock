@@ -15,18 +15,13 @@ uint8_t WordClockScene::getDotsCount(time_t time) {
 }
 
 void WordClockScene::showWords(WordList &nextWords, time_t time) {
-  nextWords.diff(currentWords).show(animator, red, green, blue);
+  nextWords.diff(currentWords).show(animator);
   currentWords.diff(nextWords).hide(animator);
 
-  animator->setDots(getDotsCount(time), red, green, blue);
+  animator->setDots(getDotsCount(time));
   animator->commit();
   
   currentWords = nextWords;
-}
-
-void WordClockScene::clearScreen() {
-  WordList noWords;
-  showWords(noWords, getLocalTime());
 }
 
 time_t WordClockScene::getLocalTime() {

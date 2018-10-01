@@ -54,8 +54,14 @@ WordClockScene wordClockScene = { &animator, &strategy };
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-PersistentColors persistentColors = { &wordClockScene };
-MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
+PersistentColors persistentColors = { &animator };
+
+// MQTT Controller can be "configured" to either update persistent colors, i.e. store each
+// changed value to EEPROM immediately.  Use this if you want the clock to reset with colors
+// updated via EEPROM.
+//MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
+// Influence animator directly (use this if you intend to update colors often)
+MqttController *mqttController = new MqttController(&animator, wifiClient);
 
 static void setupWifiAP() {
   IPAddress apIP(192, 168, 4, 1);

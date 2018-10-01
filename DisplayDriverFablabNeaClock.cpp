@@ -14,12 +14,12 @@ int DisplayDriverFablabNeaClock::height() {
   return 10;
 }
 
-void DisplayDriverFablabNeaClock::setDots(uint8_t count, uint8_t red, uint8_t green, uint8_t blue) {
+void DisplayDriverFablabNeaClock::setDots(uint8_t count, uint32_t color) {
   uint8_t positions[4] = { 111, 112, 113, 110 };
   uint8_t i = 0;
 
   for (; i < count; i ++)
-    pixels.setPixelColor(positions[i], pixels.Color(red, green, blue));
+    pixels.setPixelColor(positions[i], color);
 
   for (; i < 4; i ++)
     pixels.setPixelColor(positions[i], 0);
@@ -29,9 +29,8 @@ uint32_t DisplayDriverFablabNeaClock::getPixel(uint8_t x, uint8_t y) {
   return pixels.getPixelColor(getPixelIndex(x, y));
 }
 
-void DisplayDriverFablabNeaClock::setPixel(uint8_t x, uint8_t y, uint8_t red, uint8_t green, uint8_t blue) {
-
-  pixels.setPixelColor(getPixelIndex(x, y), pixels.Color(red, green, blue));
+void DisplayDriverFablabNeaClock::setPixel(uint8_t x, uint8_t y, uint32_t color) {
+  pixels.setPixelColor(getPixelIndex(x, y), color);
 }
 
 uint8_t DisplayDriverFablabNeaClock::getPixelIndex(uint8_t x, uint8_t y) {
@@ -42,15 +41,7 @@ uint8_t DisplayDriverFablabNeaClock::getPixelIndex(uint8_t x, uint8_t y) {
   return y * width() + x;
 }
 
-void DisplayDriverFablabNeaClock::clearPixel(uint8_t x, uint8_t y) {
-  setPixel(x, y, 0, 0, 0);
-}
-
 void DisplayDriverFablabNeaClock::show() {
   pixels.show();
-}
-
-void DisplayDriverFablabNeaClock::clear() {
-  pixels.clear();
 }
 
