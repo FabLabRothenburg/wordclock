@@ -24,6 +24,9 @@ class DiyHueController : public IColorControllable {
     void maintain();
 
     void setLightState(bool light_state) { this->light_state = light_state; }
+    bool getLightState() const { return light_state; }
+
+    uint8_t getColorMode() const { return color_mode; }
 
     virtual void setRed(uint8_t red);
     virtual void setGreen(uint8_t green);
@@ -32,12 +35,20 @@ class DiyHueController : public IColorControllable {
     void setColorX(float x);
     void setColorY(float y);
 
+    float getColorX() const { return x; }
+    float getColorY() const { return y; }
+
     void setBri(uint8_t bri) { this->bri = bri; }
     void incBri(int bri);
+    uint8_t getBri() const { return bri; }
 
     void setCt(int ct);
     void setSat(uint8_t sat);
     void setHue(int hue);
+
+    int getCt() const { return ct; }
+    uint8_t getSat() const { return sat; }
+    int getHue() const { return hue; }
 
     void alert();
     void process_lightdata(float transitiontime);

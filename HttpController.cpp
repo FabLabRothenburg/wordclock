@@ -180,6 +180,30 @@ static void handleDiyHueSet() {
   diyHueController.process_lightdata(transitiontime);
 }
 
+static void handleDiyHueGet() {
+  String colormode;
+  String power_status = diyHueController.getLightState() ? "true" : "false";
+  
+  if (diyHueController.getColorMode() == 1)
+    colormode = "xy";
+  else if (diyHueController.getColorMode() == 2)
+    colormode = "ct";
+  else if (diyHueController.getColorMode() == 3)
+    colormode = "hs";
+
+  server.send(200, "text/plain", "{\"on\": " + power_status
+    + ", \"bri\": " + (String)diyHueController.getBri()
+    + ", \"xy\": [" + (String)diyHueController.getColorX() + ", " + (String)diyHueController.getColorY()
+    + "], \"ct\":" + (String)diyHueController.getCt()
+    + ", \"sat\": " + (String)diyHueController.getSat()
+    + ", \"hue\": " + (String)diyHueController.getHue()
+    + ", \"colormode\": \"" + colormode + "\"}");
+}
+
+static void handleDiyHueDetect() {
+  server.send(200, "text/plain", "{\"hue\": \"bulb\",\"lights\": 1,\"modelid\": \"LCT015\",\"name\": \"wordClock\",\"mac\": \"" + WiFi.macAddress() + "\"}");
+}
+
 static void handleNotFound(){
   String message = "File Not Found\n\n";
   message += "URI: ";
@@ -200,6 +224,8 @@ static void handleNotFound(){
 void HttpController::setup() {
   server.on("/", handleRoot);
   server.on("/set", handleDiyHueSet);
+  server.on("/get", handleDiyHueGet);
+  server.on("/detect", handleDiyHueDetect);
 
   server.onNotFound(handleNotFound);
   server.begin();
