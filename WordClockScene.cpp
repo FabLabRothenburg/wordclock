@@ -15,12 +15,21 @@ uint8_t WordClockScene::getDotsCount(time_t time) {
 }
 
 void WordClockScene::showWords(WordList &nextWords, time_t time) {
-  nextWords.diff(currentWords).show(animator);
-  currentWords.diff(nextWords).hide(animator);
+  WordList wordsToShow = nextWords.diff(currentWords);
+  WordList wordsToHide = currentWords.diff(nextWords);
+  uint8_t wantedDots = getDotsCount(time);
 
-  animator->setDots(getDotsCount(time));
+  if (wordsToShow.isEmpty() && wordsToHide.isEmpty() && wantedDots == currentDots) {
+    return;  // nothing to update
+  }
+  
+  wordsToShow.show(animator);
+  wordsToHide.hide(animator);
+
+  animator->setDots(wantedDots);
   animator->commit();
   
+  currentDots = wantedDots;
   currentWords = nextWords;
 }
 

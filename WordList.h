@@ -17,6 +17,10 @@ class WordList {
 
     const Word &getWord(uint8_t index) const { return words[index]; }
     uint8_t getLength() const { return length; }
+
+    bool isEmpty () const {
+      return length == 0;
+    }
 };
 
 #endif  /* !WORD_LIST_H */

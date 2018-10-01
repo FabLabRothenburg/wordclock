@@ -10,6 +10,8 @@
 class WordClockScene {
   private:
     IAnimator *animator;
+
+    uint8_t currentDots = 255;
     WordList currentWords;
 
   protected:
