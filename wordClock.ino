@@ -54,7 +54,7 @@ WordClockScene wordClockScene = { &animator, &strategy };
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-PersistentColors persistentColors = { &wordClockScene };
+PersistentColors persistentColors = { &animator };
 MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 
 static void setupWifiAP() {
