@@ -20,7 +20,7 @@ class DiyHueController : public IColorControllable {
 
   public:
     DiyHueController(IColorControllable *controllable)
-      : controllable(controllable) { }
+      : controllable(controllable) { apply_colors(); }
     void maintain();
 
     void setLightState(bool light_state) { this->light_state = light_state; }
@@ -46,6 +46,8 @@ class DiyHueController : public IColorControllable {
     void convert_hue();
     void convert_xy();
     void convert_ct();
+
+    void apply_colors();
 
 };
 

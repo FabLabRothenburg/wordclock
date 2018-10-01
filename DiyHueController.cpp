@@ -242,10 +242,7 @@ void DiyHueController::maintain() {
           if ((step_level[k] > 0.0 && current_rgb[k] > rgb[k]) || (step_level[k] < 0.0 && current_rgb[k] < rgb[k])) current_rgb[k] = rgb[k];
         }
 
-        // @TODO perform just a single update!?
-        controllable->setRed(current_rgb[0]);
-        controllable->setGreen(current_rgb[1]);
-        controllable->setBlue(current_rgb[2]);
+        apply_colors();
 
         Serial.println("target color is now r=" + String(rgb[0]) + ", g=" + String(rgb[1]) + ", b=" + String(rgb[2]));
         Serial.println("modifying color to  r=" + String(current_rgb[0]) + ", g=" + String(current_rgb[1]) + ", b=" + String(current_rgb[2]));
@@ -258,14 +255,18 @@ void DiyHueController::maintain() {
           if (current_rgb[k] < 0) current_rgb[k] = 0;
         }
 
-        // @TODO perform just a single update!?
-        controllable->setRed(current_rgb[0]);
-        controllable->setGreen(current_rgb[1]);
-        controllable->setBlue(current_rgb[2]);
+        apply_colors();
       }
     }
 
     delay(6);
   } while (in_transition);
+}
+
+void DiyHueController::apply_colors() {
+  // @TODO perform just a single update!?
+  controllable->setRed(current_rgb[0]);
+  controllable->setGreen(current_rgb[1]);
+  controllable->setBlue(current_rgb[2]);
 }
 
