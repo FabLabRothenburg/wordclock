@@ -1,3 +1,4 @@
+#include "DiyHueController.h"
 #include "HttpController.h"
 #include "HttpContent.h"
 #include "PersistentStorage.h"
@@ -124,6 +125,61 @@ static void handleRoot() {
   server.send(200, "text/html", content);
 }
 
+static void handleDiyHueSet() {
+  float transitiontime = 4;
+
+  for (uint8_t i = 0; i < server.args(); i++) {
+    if (server.argName(i) == "on") {
+      if (server.arg(i) == "True" || server.arg(i) == "true") {
+        diyHueController.setLightState(true);
+      }
+      else {
+        diyHueController.setLightState(false);
+      }
+    }
+    else if (server.argName(i) == "r") {
+      diyHueController.setRed(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "g") {
+      diyHueController.setGreen(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "b") {
+      diyHueController.setBlue(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "x") {
+      diyHueController.setColorX(server.arg(i).toFloat());
+    }
+    else if (server.argName(i) == "y") {
+      diyHueController.setColorY(server.arg(i).toFloat());
+    }
+    else if (server.argName(i) == "bri") {
+      diyHueController.setBri(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "bri_inc") {
+      diyHueController.incBri(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "ct") {
+      diyHueController.setCt(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "sat") {
+      diyHueController.setSat(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "hue") {
+      diyHueController.setHue(server.arg(i).toInt());
+    }
+    else if (server.argName(i) == "alert" && server.arg(i) == "select") {
+      diyHueController.alert();
+    }
+    else if (server.argName(i) == "transitiontime") {
+      transitiontime = server.arg(i).toInt();
+    }
+  }
+
+  server.send(200, "text/plain", "OK");
+  //server.send(200, "text/plain", "OK, x: " + (String)x[light] + ", y:" + (String)y[light] + ", bri:" + (String)bri[light] + ", ct:" + ct[light] + ", colormode:" + color_mode[light] + ", state:" + light_state[light]);
+  diyHueController.process_lightdata(transitiontime);
+}
+
 static void handleNotFound(){
   String message = "File Not Found\n\n";
   message += "URI: ";
@@ -143,6 +199,7 @@ static void handleNotFound(){
 
 void HttpController::setup() {
   server.on("/", handleRoot);
+  server.on("/set", handleDiyHueSet);
 
   server.onNotFound(handleNotFound);
   server.begin();

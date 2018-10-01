@@ -7,6 +7,7 @@
 #include "DisplayDriver10x11Clock.h"
 #include "DisplayDriverFablabNeaClock.h"
 #include "DisplayDriverFrickelClock.h"
+#include "DiyHueController.h"
 #include "FallingStarAnimator.h"
 #include "IncrementalAnimator.h"
 #include "HttpController.h"
@@ -48,20 +49,22 @@ WordingStrategyStesie strategy = { &wordFactory };
 //IncrementalAnimator animator = { &driver };
 FallingStarAnimator animator = { &driver };
 
+DiyHueController diyHueController = { &animator };
+
 #if 1
 WordClockScene wordClockScene = { &animator, &strategy };
 #else
 MockWordClockScene wordClockScene = { &animator, &strategy };
 #endif
 
-PersistentColors persistentColors = { &animator };
+PersistentColors persistentColors = { &diyHueController };
 
 // MQTT Controller can be "configured" to either update persistent colors, i.e. store each
 // changed value to EEPROM immediately.  Use this if you want the clock to reset with colors
 // updated via EEPROM.
 //MqttController *mqttController = new MqttController(&persistentColors, wifiClient);
 // Influence animator directly (use this if you intend to update colors often)
-MqttController *mqttController = new MqttController(&animator, wifiClient);
+MqttController *mqttController = new MqttController(&diyHueController, wifiClient);
 
 static void setupWifiAP() {
   IPAddress apIP(192, 168, 4, 1);
@@ -150,6 +153,7 @@ void loop() {
 #endif
 
   wordClockScene.loop();
+  diyHueController.maintain();
   delay(1000);
 }
 
