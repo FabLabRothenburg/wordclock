@@ -102,6 +102,7 @@ void setup() {
 
 #ifdef ESP8266
   Serial.begin(115200);
+  Serial.println("wordClock reset, setting up ...");
 #endif
 
   persistentStorage.setup();
@@ -154,6 +155,6 @@ void loop() {
 
   wordClockScene.loop();
   diyHueController.maintain();
-  delay(1000);
+  //delay(1000);
 }
 

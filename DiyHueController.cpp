@@ -9,8 +9,7 @@
 
 #include "DiyHueController.h"
 
-#define pixelCount 114
-#define FALLBACK_TRANSITION_TIME 1
+#define FALLBACK_TRANSITION_TIME 4
 
 void DiyHueController::setRed(uint8_t red) {
   rgb[0] = red;
@@ -221,7 +220,7 @@ void DiyHueController::convert_ct() {
 }
 
 void DiyHueController::process_lightdata(float transitiontime) {
-  transitiontime *= 17 - (pixelCount / 40); //every extra led add a small delay that need to be counted
+  transitiontime *= 8;
 
   if (color_mode == 1 && light_state == true) {
     convert_xy();
@@ -240,38 +239,25 @@ void DiyHueController::process_lightdata(float transitiontime) {
 }
 
 void DiyHueController::maintain() {
-  bool in_transition;
-
-  do {
-    in_transition = false;
-
-    if (light_state) {
-      if (rgb[0] != current_rgb[0] || rgb[1] != current_rgb[1] || rgb[2] != current_rgb[2]) {
-        in_transition = true;
-        for (uint8_t k = 0; k < 3; k++) {
-          if (rgb[k] != current_rgb[k]) current_rgb[k] += step_level[k];
-          if ((step_level[k] > 0.0 && current_rgb[k] > rgb[k]) || (step_level[k] < 0.0 && current_rgb[k] < rgb[k])) current_rgb[k] = rgb[k];
-        }
-
-        apply_colors();
-
-        Serial.println("target color is now r=" + String(rgb[0]) + ", g=" + String(rgb[1]) + ", b=" + String(rgb[2]));
-        Serial.println("modifying color to  r=" + String(current_rgb[0]) + ", g=" + String(current_rgb[1]) + ", b=" + String(current_rgb[2]));
+  if (light_state) {
+    if (rgb[0] != current_rgb[0] || rgb[1] != current_rgb[1] || rgb[2] != current_rgb[2]) {
+      for (uint8_t k = 0; k < 3; k++) {
+        if (rgb[k] != current_rgb[k]) current_rgb[k] += step_level[k];
+        if ((step_level[k] > 0.0 && current_rgb[k] > rgb[k]) || (step_level[k] < 0.0 && current_rgb[k] < rgb[k])) current_rgb[k] = rgb[k];
       }
-    } else {
-      if (current_rgb[0] != 0 || current_rgb[1] != 0 || current_rgb[2] != 0) {
-        in_transition = true;
-        for (uint8_t k = 0; k < 3; k++) {
-          if (current_rgb[k] != 0) current_rgb[k] -= step_level[k];
-          if (current_rgb[k] < 0) current_rgb[k] = 0;
-        }
 
-        apply_colors();
-      }
+      apply_colors();
     }
+  } else {
+    if (current_rgb[0] != 0 || current_rgb[1] != 0 || current_rgb[2] != 0) {
+      for (uint8_t k = 0; k < 3; k++) {
+        if (current_rgb[k] != 0) current_rgb[k] -= step_level[k];
+        if (current_rgb[k] < 0) current_rgb[k] = 0;
+      }
 
-    delay(6);
-  } while (in_transition);
+      apply_colors();
+    }
+  }
 }
 
 void DiyHueController::apply_colors() {
