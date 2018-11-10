@@ -21,6 +21,7 @@
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
+#include "WordingStrategyWest.h"
 #include "WordClockScene.h"
 
 #ifdef ESP8266
@@ -31,6 +32,10 @@ WiFiClient wifiClient;
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy = { &wordFactory };
+#elif 0
+DisplayDriverFablabNeaClock driver;
+WordFactoryGermanV2Clock wordFactory;
+WordingStrategyWest strategy = { &wordFactory };
 #elif 1
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
