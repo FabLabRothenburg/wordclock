@@ -9,7 +9,7 @@ class DisplayDriverFablabNeaClock : public IDisplayDriver
 {
   private:
     uint8_t pin = 5;
-    Adafruit_NeoPixel pixels = { 114, pin, NEO_GRB + NEO_KHZ800 };
+    Adafruit_NeoPixel pixels = { 114, pin, NEO_RGB + NEO_KHZ800 };
 
   public:
     void setup();
