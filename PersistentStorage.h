@@ -14,7 +14,7 @@ class PersistentStorage
     uint8_t blue;
 
     struct {
-      char ssid[16];
+      char ssid[32];
       char password[64];
     } wifi;
 

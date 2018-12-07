@@ -84,7 +84,7 @@ static void handleRoot() {
     content += F("<form method='POST'>");
 
     content += F("<h4>Wifi Settings</h4>");
-    content += form_input("wifissid", F("SSID"), persistentStorage.wifi.ssid, 16);
+    content += form_input("wifissid", F("SSID"), persistentStorage.wifi.ssid, 32);
     content += form_password("wifipassword", F("Password"), persistentStorage.wifi.password, 64);
 
     content += F("<h4>Primary Text Color</h4>");
