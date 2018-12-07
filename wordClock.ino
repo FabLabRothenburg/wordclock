@@ -85,7 +85,7 @@ static void setupWifiAP() {
 static void setupWifi() {
   if (persistentStorage.wifi.ssid[0] != 0) {
     WiFi.mode(WIFI_STA);
-    WiFi.begin(persistentStorage.wifi.ssid, persistentStorage.wifi.password);
+    WiFi.begin(persistentStorage.wifi.ssid, strlen(persistentStorage.wifi.password) > 0 ? persistentStorage.wifi.password : NULL);
 
     int retry_count = 0;
     while (WiFi.status() != WL_CONNECTED && retry_count < 20) {
