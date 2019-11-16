@@ -18,10 +18,12 @@
 #include "PersistentColors.h"
 #include "PersistentStorage.h"
 #include "WordFactoryGermanV2Clock.h"
+#include "WordFactorySchwabenClock.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
 #include "WordingStrategyWest.h"
+#include "WordingStrategySchwaben.h"
 #include "WordClockScene.h"
 
 #ifdef ESP8266
@@ -36,6 +38,10 @@ WordingStrategyEnglish strategy = { &wordFactory };
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
 WordingStrategyWest strategy = { &wordFactory };
+#elif 0
+DisplayDriverFablabNeaClock driver;
+WordFactorySchwabenClock wordFactory;
+WordingStrategySchwaben strategy = { &wordFactory };
 #elif 1
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
@@ -160,6 +166,4 @@ void loop() {
 
   wordClockScene.loop();
   diyHueController.maintain();
-  //delay(1000);
 }
-
