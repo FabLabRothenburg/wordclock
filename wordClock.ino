@@ -19,6 +19,7 @@
 #include "PersistentStorage.h"
 #include "WordFactoryGermanV2Clock.h"
 #include "WordFactorySchwabenClock.h"
+#include "WordFactoryFrankenClock.h"
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"

@@ -1,5 +1,5 @@
-#ifndef WORD_FACTORY_FRANKEN_CLOCK_H
-#define WORD_FACTORY_FRANKEN_CLOCK_H
+#ifndef WORD_FACTORY_GERMANY_V2_CLOCK_H
+#define WORD_FACTORY_GERMANY_V2_CLOCK_H
 
 #include "IWordFactoryFrankenClock.h"
 
@@ -24,8 +24,4 @@ class WordFactoryGermanV2Clock : public IWordFactoryFrankenClock {
     virtual const Word getWordForHour(uint8_t hour) const;
 };
 
-#endif  /* !WORD_FACTORY_FRANKEN_CLOCK_H */
-
-
-
-
+#endif  /* !WORD_FACTORY_GERMANY_V2_CLOCK_H */
