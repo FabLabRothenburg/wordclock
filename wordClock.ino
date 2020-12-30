@@ -4,19 +4,24 @@
 #  include <ESP8266mDNS.h>
 #endif
 
-#include "DisplayDriver10x11Clock.h"
-#include "DisplayDriverFablabNeaClock.h"
-#include "DisplayDriverFrickelClock.h"
 #include "DiyHueController.h"
-#include "FallingStarAnimator.h"
-#include "IncrementalAnimator.h"
 #include "HttpController.h"
 #include "NtpClient.h"
-#include "NullAnimator.h"
-#include "MockWordClockScene.h"
 #include "MqttController.h"
 #include "PersistentColors.h"
 #include "PersistentStorage.h"
+
+#include "WordClockScene.h"
+#include "MockWordClockScene.h"
+
+#include "NullAnimator.h"
+#include "IncrementalAnimator.h"
+#include "FallingStarAnimator.h"
+
+#include "DisplayDriver10x11Clock.h"
+#include "DisplayDriverFablabNeaClock.h"
+#include "DisplayDriverFrickelClock.h"
+
 #include "WordFactoryGermanV2Clock.h"
 #include "WordFactorySchwabenClock.h"
 #include "WordFactoryFrankenClock.h"
@@ -25,7 +30,6 @@
 #include "WordingStrategyFranken.h"
 #include "WordingStrategyWest.h"
 #include "WordingStrategySchwaben.h"
-#include "WordClockScene.h"
 
 #ifdef ESP8266
 WiFiClient wifiClient;
@@ -34,42 +38,50 @@ WiFiClient wifiClient;
 #if 0
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
-WordingStrategyEnglish strategy = { &wordFactory };
+WordingStrategyEnglish strategy( &wordFactory );
 #elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
-WordingStrategyWest strategy = { &wordFactory };
+WordingStrategyWest strategy( &wordFactory );
 #elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactorySchwabenClock wordFactory;
-WordingStrategySchwaben strategy = { &wordFactory };
+WordingStrategySchwaben strategy( &wordFactory );
 #elif 1
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
-WordingStrategyFranken strategy = { &wordFactory };
+WordingStrategyFranken strategy( &wordFactory );
 #elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactoryFrankenClock wordFactory;
-WordingStrategyFranken strategy = { &wordFactory };
+WordingStrategyFranken strategy( &wordFactory );
 #else
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
-WordingStrategyStesie strategy = { &wordFactory };
+WordingStrategyStesie strategy( &wordFactory );
 #endif
 
-//NullAnimator animator = { &driver };
-//IncrementalAnimator animator = { &driver };
-FallingStarAnimator animator = { &driver };
+//#define TEST_MODE  /* Zum Testen */
 
-DiyHueController diyHueController = { &animator };
-
-#if 1
-WordClockScene wordClockScene = { &animator, &strategy };
+#ifdef TEST_MODE
+NullAnimator animator( &driver );
 #else
-MockWordClockScene wordClockScene = { &animator, &strategy };
+//NullAnimator animator( &driver );
+//IncrementalAnimator animator( &driver );
+FallingStarAnimator animator( &driver );
 #endif
 
-PersistentColors persistentColors = { &diyHueController };
+DiyHueController diyHueController( &animator );
+
+#if TEST_MODE
+MockWordClockScene wordClockScene( &animator, &strategy );
+#else
+WordClockScene wordClockScene( &animator, &strategy );
+#endif
+
+const char strWifiID[] = "Wordclock-%06x";
+
+PersistentColors persistentColors( &diyHueController );
 
 // MQTT Controller can be "configured" to either update persistent colors, i.e. store each
 // changed value to EEPROM immediately.  Use this if you want the clock to reset with colors
@@ -83,7 +95,7 @@ static void setupWifiAP() {
   IPAddress netMsk(255, 255, 255, 0);
 
   char ssid[32];
-  sprintf(ssid, "wordclock-%06x", ESP.getChipId());
+  sprintf(ssid, strWifiID, ESP.getChipId());
 
   WiFi.softAPConfig(apIP, apIP, netMsk);
   WiFi.softAP(ssid);
@@ -123,7 +135,7 @@ void setup() {
   setupWifi();
 
   char tmp[32];
-  sprintf(tmp, "wordclock-%06x", ESP.getChipId());
+  sprintf(tmp, strWifiID, ESP.getChipId());
   ArduinoOTA.setHostname(tmp);
   ArduinoOTA.begin();
 
@@ -142,6 +154,11 @@ void setup() {
 }
 
 void loop() {
+
+#ifdef TEST_MODE
+  delay(300);
+#endif
+
 #ifdef ESP8266
   if (persistentStorage.wifi.ssid[0] != 0 && WiFi.status() != WL_CONNECTED) {
     Serial.println("Connection lost, reconnecting");
