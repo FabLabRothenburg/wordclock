@@ -25,11 +25,14 @@
 #include "WordFactoryGermanV2Clock.h"
 #include "WordFactorySchwabenClock.h"
 #include "WordFactoryFrankenClock.h"
+#include "WordFactorySwedishClock.h"
+
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
 #include "WordingStrategyFranken.h"
 #include "WordingStrategyWest.h"
 #include "WordingStrategySchwaben.h"
+#include "WordingStrategySwedish.h"
 
 #ifdef ESP8266
 WiFiClient wifiClient;
@@ -55,10 +58,14 @@ WordingStrategyFranken strategy( &wordFactory );
 DisplayDriverFablabNeaClock driver;
 WordFactoryFrankenClock wordFactory;
 WordingStrategyFranken strategy( &wordFactory );
-#else
+#elif 0
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
 WordingStrategyStesie strategy( &wordFactory );
+#else
+DisplayDriverFablabNeaClock driver;
+WordFactorySwedishClock wordFactory;
+WordingStrategySwedish strategy( &wordFactory );
 #endif
 
 //#define TEST_MODE  /* Zum Testen */
