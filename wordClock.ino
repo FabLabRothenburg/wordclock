@@ -21,6 +21,7 @@
 #include "DisplayDriver10x11Clock.h"
 #include "DisplayDriverFablabNeaClock.h"
 #include "DisplayDriverFrickelClock.h"
+#include "DisplayDriverMinutesFirstClock.h"
 
 #include "WordFactoryGermanV2Clock.h"
 #include "WordFactorySchwabenClock.h"
@@ -67,11 +68,11 @@ DisplayDriverFablabNeaClock driver;
 WordFactorySwedishClock wordFactory;
 WordingStrategySwedish strategy( &wordFactory );
 #elif 0
-DisplayDriverFablabNeaClock driver;
+DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
 WordFactoryBayernClock wordFactory;
 WordingStrategyBayern strategy( &wordFactory );
 #elif 0
-DisplayDriverFablabNeaClock driver;
+DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
 WordFactoryRoadaburchClock wordFactory;
 WordingStrategyRoadaburch strategy( &wordFactory );
 #endif

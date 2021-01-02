@@ -3,12 +3,12 @@
 
 #include <Adafruit_NeoPixel.h>
 #include "IDisplayDriver.h"
-#include "IAnimator.h"
 
+// 10x11Clock: Verkabelungsstart links oben. Die letzten 4 Pixel gehoeren den Minuten. Min-Start links oben
 class DisplayDriver10x11Clock : public IDisplayDriver
 {
-  private:
-    uint8_t pin = 5;
+  protected:
+    uint8_t pin = 5;  // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
     Adafruit_NeoPixel pixels = { 114, pin, NEO_GRB + NEO_KHZ800 };
 
   public:
@@ -24,8 +24,8 @@ class DisplayDriver10x11Clock : public IDisplayDriver
 
     virtual void show();
 
-  private:
-    uint8_t getPixelIndex(uint8_t x, uint8_t y);
+  protected:
+    virtual uint8_t getPixelIndex(uint8_t x, uint8_t y);
 };
 
 #endif  /* !DISPLAY_DRIVER_10x11_CLOCK_H */

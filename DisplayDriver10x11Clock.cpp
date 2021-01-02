@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "DisplayDriver10x11Clock.h"
 
 void DisplayDriver10x11Clock::setup() {
