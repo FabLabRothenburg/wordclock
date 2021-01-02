@@ -106,7 +106,7 @@ void DiyHueController::convert_hue() {
   }
   hh = hue;
   if (hh >= 65535.0) hh = 0.0;
-  hh /= 11850, 0;
+  hh /= 11850;
   i = (long)hh;
   ff = hh - i;
   p = v * (1.0 - s);
