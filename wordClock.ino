@@ -38,7 +38,7 @@
 WiFiClient wifiClient;
 #endif
 
-#if 0
+#if 1
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy( &wordFactory );
@@ -50,7 +50,7 @@ WordingStrategyWest strategy( &wordFactory );
 DisplayDriverFablabNeaClock driver;
 WordFactorySchwabenClock wordFactory;
 WordingStrategySchwaben strategy( &wordFactory );
-#elif 1
+#elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactoryGermanV2Clock wordFactory;
 WordingStrategyFranken strategy( &wordFactory );
@@ -62,10 +62,18 @@ WordingStrategyFranken strategy( &wordFactory );
 DisplayDriverFrickelClock driver;
 WordFactoryFrickelClock wordFactory;
 WordingStrategyStesie strategy( &wordFactory );
-#else
+#elif 0
 DisplayDriverFablabNeaClock driver;
 WordFactorySwedishClock wordFactory;
 WordingStrategySwedish strategy( &wordFactory );
+#elif 0
+DisplayDriverFablabNeaClock driver;
+WordFactoryBayernClock wordFactory;
+WordingStrategyBayern strategy( &wordFactory );
+#elif 0
+DisplayDriverFablabNeaClock driver;
+WordFactoryRoadaburchClock wordFactory;
+WordingStrategyRoadaburch strategy( &wordFactory );
 #endif
 
 //#define TEST_MODE  /* Zum Testen */

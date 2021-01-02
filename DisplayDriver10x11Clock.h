@@ -29,8 +29,3 @@ class DisplayDriver10x11Clock : public IDisplayDriver
 };
 
 #endif  /* !DISPLAY_DRIVER_10x11_CLOCK_H */
-
-
-
-
-
