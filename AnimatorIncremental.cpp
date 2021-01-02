@@ -1,4 +1,4 @@
-#include "IncrementalAnimator.h"
+#include "AnimatorIncremental.h"
 
 void IncrementalAnimator::setPixel(uint8_t x, uint8_t y) {
   driver->setPixel(x, y, pack(red, green, blue));

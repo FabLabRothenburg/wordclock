@@ -1,12 +1,10 @@
-#include "FallingStarAnimator.h"
+#include "AnimatorFallingStar.h"
 
 #define FALLING_STAR_FACTOR 0.8
 
 FallingStar::FallingStar(IDisplayDriver *driver, uint8_t x, uint8_t y, int delay)
   : driver(driver), x(x), y(y), delay(delay) {
   color = driver->getPixel(x, y);
-  applied = true;
-  finished = false;
 }
 
 bool FallingStar::animate() {

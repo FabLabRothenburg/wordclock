@@ -14,9 +14,9 @@
 #include "WordClockScene.h"
 #include "MockWordClockScene.h"
 
-#include "NullAnimator.h"
-#include "IncrementalAnimator.h"
-#include "FallingStarAnimator.h"
+#include "AnimatorNull.h"
+#include "AnimatorIncremental.h"
+#include "AnimatorFallingStar.h"
 
 #include "DisplayDriver10x11Clock.h"
 #include "DisplayDriverFablabNeaClock.h"

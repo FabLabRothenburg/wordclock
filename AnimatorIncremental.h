@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "IDisplayDriver.h"
-#include "NullAnimator.h"
+#include "AnimatorNull.h"
 
 class IncrementalAnimator: public NullAnimator
 {
@@ -16,9 +16,3 @@ class IncrementalAnimator: public NullAnimator
 
 
 #endif  /* !INCREMENTAL_ANIMATOR_H */
-
-
-
-
-
-

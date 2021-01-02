@@ -2,7 +2,7 @@
 #define FALLING_STAR_ANIMATOR_H
 
 #include <Arduino.h>
-#include "NullAnimator.h"
+#include "AnimatorNull.h"
 
 #define FALLING_STAR_LIMIT 20
 
@@ -11,11 +11,12 @@ class FallingStar
   private:
     IDisplayDriver *driver;
 
-    uint8_t x, y;
-    int delay;
-    uint32_t color;
-    bool applied;
-    bool finished;
+    uint8_t x = 0;
+    uint8_t y = 0;
+    int delay = 0;
+    uint32_t color = 0;
+    bool applied = true;
+    bool finished = false;
 
   public:
     FallingStar() { }

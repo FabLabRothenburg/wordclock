@@ -1,4 +1,4 @@
-#include "NullAnimator.h"
+#include "AnimatorNull.h"
 
 void NullAnimator::setDots(uint8_t count) {
   driver->setDots(count, pack(red, green, blue));
