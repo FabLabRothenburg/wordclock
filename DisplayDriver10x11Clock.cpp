@@ -1,5 +1,13 @@
 #include "DisplayDriver10x11Clock.h"
 
+DisplayDriver10x11Clock::DisplayDriver10x11Clock()
+  : pin(5), pixels( 114, pin, NEO_GRB + NEO_KHZ800 ) {
+}
+
+DisplayDriver10x11Clock::DisplayDriver10x11Clock(uint16_t digPin)
+  : pin(digPin), pixels( 114, digPin, NEO_GRB + NEO_KHZ800 ) {
+}
+
 void DisplayDriver10x11Clock::setup() {
   pixels.begin();
 }

@@ -27,6 +27,8 @@
 #include "WordFactorySchwabenClock.h"
 #include "WordFactoryFrankenClock.h"
 #include "WordFactorySwedishClock.h"
+#include "WordFactoryBayernClock.h"
+#include "WordFactoryRoadaburchClock.h"
 
 #include "WordingStrategyStesie.h"
 #include "WordingStrategyEnglish.h"
@@ -34,6 +36,8 @@
 #include "WordingStrategyWest.h"
 #include "WordingStrategySchwaben.h"
 #include "WordingStrategySwedish.h"
+#include "WordingStrategyBayern.h"
+#include "WordingStrategyRoadaburch.h"
 
 #ifdef ESP8266
 WiFiClient wifiClient;
@@ -70,14 +74,14 @@ WordingStrategySwedish strategy( &wordFactory );
 #elif 0
 DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
 WordFactoryBayernClock wordFactory;
-WordingStrategyBayern strategy( &wordFactory );
+WordingStrategyBayern strategy( &wordFactory, true );
 #elif 0
 DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
 WordFactoryRoadaburchClock wordFactory;
 WordingStrategyRoadaburch strategy( &wordFactory );
 #endif
 
-//#define TEST_MODE  /* Zum Testen */
+//#define TEST_MODE 1 /* Zum Testen */
 
 #ifdef TEST_MODE
 NullAnimator animator( &driver );

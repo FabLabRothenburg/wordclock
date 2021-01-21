@@ -12,9 +12,7 @@ WordList WordingStrategyRoadaburch::wordsForTime(uint8_t hour, uint8_t minute)
     switch (fiveMinuteCluster)
     {
         case 0:
-            if (minute == 0) {
-                words.add(wordFactory->getWordSCHO());
-             }
+            words.add(wordFactory->getWordSCHO());
             break;
 
         case 1:
@@ -44,6 +42,7 @@ WordList WordingStrategyRoadaburch::wordsForTime(uint8_t hour, uint8_t minute)
             break;
 
         case 6:
+            words.add(wordFactory->getWordSCHO());
             words.add(wordFactory->getWordHALBER());
             break;
 

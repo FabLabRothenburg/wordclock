@@ -21,7 +21,6 @@ const Word WordFactorySchwabenClock::getWordZWANZIG() const {
   return Word(4, 1, 7);
 }
 
-
 const Word WordFactorySchwabenClock::getWordVIERTEL() const {
   return Word(4, 3, 7);
 }

@@ -9,7 +9,7 @@ class DisplayDriverMinutesFirstClock : public DisplayDriver10x11Clock
 {
   public:
     DisplayDriverMinutesFirstClock()  {}
-    DisplayDriverMinutesFirstClock(uint8_t digPin);
+    DisplayDriverMinutesFirstClock(uint16_t digPin);
 
   public:
     virtual void setDots(uint8_t count, uint32_t color);
