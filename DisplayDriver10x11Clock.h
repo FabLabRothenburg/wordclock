@@ -12,8 +12,8 @@ class DisplayDriver10x11Clock : public IDisplayDriver
     DisplayDriver10x11Clock(uint16_t digPin);
 
   protected:
-    uint16_t pin;// = 5;  // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
-    Adafruit_NeoPixel pixels;// = { 114, pin, NEO_GRB + NEO_KHZ800 };
+    uint16_t pin;
+    Adafruit_NeoPixel pixels;
 
   public:
     void setup();

@@ -26,6 +26,11 @@ HttpController httpController;
     setting = server.arg(#param).toInt(); \
   }
 
+String form_small_header(const String& name) {
+    String s = F("<hr><div><b>{n}</b></div>");
+    s.replace("{n}", name);
+    return s;
+}
 
 String form_input(const String& name, const String& info, const String& value, const int length) {
     String s = F("<div>{i}: <input type='text' name='{n}' id='{n}' placeholder='{i}' value='{v}' maxlength='{l}'/></div>");
@@ -83,28 +88,30 @@ static void handleRoot() {
   if (server.method() == HTTP_GET) {
     content += F("<form method='POST'>");
 
-    content += F("<h4>Wifi Settings</h4>");
+    content += form_small_header("WiFi Settings");
     content += form_input("wifissid", F("SSID"), persistentStorage.wifi.ssid, 32);
     content += form_password("wifipassword", F("Password"), persistentStorage.wifi.password, 64);
 
-    content += F("<h4>Primary Text Color</h4>");
+    content += form_small_header("Primary Text Color");
     content += form_number("red", F("Red"), persistentStorage.red, 0, 255);
     content += form_number("green", F("Green"), persistentStorage.green, 0, 255);
     content += form_number("blue", F("Blue"), persistentStorage.blue, 0, 255);
 
-    content += F("<h4>NTP Settings</h4>");
+    content += form_small_header("NTP Settings");
     content += form_input("ntphost", F("Host"), persistentStorage.ntp.domain, sizeof(persistentStorage.ntp.domain));
     
-    content += F("<h4>MQTT Settings</h4>");
+    content += form_small_header("MQTT Settings");
     content += form_checkbox("mqttenabled", F("Enabled"), persistentStorage.flags.mqttEnabled);
     content += form_input("mqtthost", F("Host"), persistentStorage.mqtt.domain, 16);
     content += form_input("mqttclientid", F("Client-ID"), persistentStorage.mqtt.clientId, 16);
     content += form_input("mqttuser", F("User"), persistentStorage.mqtt.user, 16);
     content += form_password("mqttpassword", F("Password"), persistentStorage.mqtt.password, 64);
 
+    content += F("<br/>");
     content += form_submit();
     content += F("</form>");
-  } else {
+  }
+  else {
     readCharParam(persistentStorage.wifi.ssid, wifissid);
     readCharParam(persistentStorage.wifi.password, wifipassword);
     readIntParam(persistentStorage.red, red);
