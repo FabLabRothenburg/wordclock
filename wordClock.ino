@@ -43,7 +43,7 @@
 WiFiClient wifiClient;
 #endif
 
-#if 1
+#if 0
 DisplayDriver10x11Clock driver;
 WordFactoryEnglish10x11Clock wordFactory;
 WordingStrategyEnglish strategy( &wordFactory );
@@ -71,6 +71,10 @@ WordingStrategyStesie strategy( &wordFactory );
 DisplayDriverFablabNeaClock driver;
 WordFactorySwedishClock wordFactory;
 WordingStrategySwedish strategy( &wordFactory );
+#elif 1
+DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
+WordFactoryFrankenClock wordFactory;
+WordingStrategyFranken strategy( &wordFactory );
 #elif 0
 DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
 WordFactoryBayernClock wordFactory;
