@@ -13,17 +13,23 @@ HttpController httpController;
     server.arg(#param).toCharArray(setting, sizeof(setting)); \
   }
 
-#define readBoolParam(setting,param) \
-  do { \
+#define readBoolParam(setting,param) { \
     setting = false; \
     if (server.hasArg(#param)) { \
-      setting = server.arg(#param) == "1"; \
+      setting = server.arg(#param) != "0"; \
     } \
-  } while(0)
+  }
 
 #define readIntParam(setting,param)  \
   if (server.hasArg(#param)) { \
     setting = server.arg(#param).toInt(); \
+  }
+
+#define readColorParam(r,g,b,param) \
+  if (server.hasArg(#param)) { \
+    r = strtol(server.arg(#param).substring(1, 2+1).c_str(), NULL, 16); \
+    g = strtol(server.arg(#param).substring(3, 4+1).c_str(), NULL, 16); \
+    b = strtol(server.arg(#param).substring(5).c_str(), NULL, 16); \
   }
 
 String form_small_header(const String& name) {
@@ -40,6 +46,28 @@ String form_input(const String& name, const String& info, const String& value, c
     s.replace("{n}", name);
     s.replace("{v}", t_value);
     s.replace("{l}", String(length));
+    return s;
+}
+
+String getColorHex( uint8_t color ) {
+  String str = String(color, HEX);
+  if(str.length() < 2)
+  {
+    str = "0";
+    str += String(color, HEX);
+  }
+  return str;
+}
+
+String form_color_input(const String& name, const String& info, uint8_t red, uint8_t green, uint8_t blue ) {
+    String colorStr = F("#");
+    colorStr += getColorHex( red );
+    colorStr += getColorHex( green );
+    colorStr += getColorHex( blue );
+    String s = F("<div>{i}: <input type='color' id='{n}' name='{n}' placeholder='{i}' value='{c}'></div>");
+    s.replace("{i}", info);
+    s.replace("{n}", name);
+    s.replace("{c}", colorStr);
     return s;
 }
 
@@ -81,6 +109,8 @@ String form_submit() {
     return s;
 }
 
+#define USE_COLOR_PICKER 0
+
 static void handleRoot() {
   String content = FPSTR(WEB_PAGE_HEADER);
   content.replace("{title}", F("WordClock Configuration"));
@@ -93,9 +123,16 @@ static void handleRoot() {
     content += form_password("wifipassword", F("Password"), persistentStorage.wifi.password, 64);
 
     content += form_small_header("Primary Text Color");
-    content += form_number("red", F("Red"), persistentStorage.red, 0, 255);
-    content += form_number("green", F("Green"), persistentStorage.green, 0, 255);
-    content += form_number("blue", F("Blue"), persistentStorage.blue, 0, 255);
+    if(USE_COLOR_PICKER)
+    {
+      content += form_color_input("textcolor", F("Color"), persistentStorage.red, persistentStorage.green, persistentStorage.blue);
+    }
+    else
+    {
+      content += form_number("red", F("Red"), persistentStorage.red, 0, 255);
+      content += form_number("green", F("Green"), persistentStorage.green, 0, 255);
+      content += form_number("blue", F("Blue"), persistentStorage.blue, 0, 255);
+    }
 
     content += form_small_header("NTP Settings");
     content += form_input("ntphost", F("Host"), persistentStorage.ntp.domain, sizeof(persistentStorage.ntp.domain));
@@ -114,9 +151,17 @@ static void handleRoot() {
   else {
     readCharParam(persistentStorage.wifi.ssid, wifissid);
     readCharParam(persistentStorage.wifi.password, wifipassword);
-    readIntParam(persistentStorage.red, red);
-    readIntParam(persistentStorage.green, green);
-    readIntParam(persistentStorage.blue, blue);
+    if(USE_COLOR_PICKER)
+    {
+      readColorParam(persistentStorage.red, persistentStorage.green, persistentStorage.blue, textcolor);
+    }
+    else
+    {
+      readIntParam(persistentStorage.red, red);
+      readIntParam(persistentStorage.green, green);
+      readIntParam(persistentStorage.blue, blue);
+    }
+   
     readBoolParam(persistentStorage.flags.mqttEnabled, mqttenabled);
     readCharParam(persistentStorage.ntp.domain, ntphost);
     readCharParam(persistentStorage.mqtt.domain, mqtthost);
