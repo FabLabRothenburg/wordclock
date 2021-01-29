@@ -73,7 +73,7 @@ WordFactorySwedishClock wordFactory;
 WordingStrategySwedish strategy( &wordFactory );
 #elif 1
 DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15
-WordFactoryFrankenClock wordFactory;
+WordFactoryGermanV2Clock wordFactory;
 WordingStrategyFranken strategy( &wordFactory );
 #elif 0
 DisplayDriverMinutesFirstClock driver(5);    // D1=5, D2=4, D3=0, D4=2, D5=14, D6=12, D7=13, D8=15

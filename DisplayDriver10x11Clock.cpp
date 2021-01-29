@@ -36,21 +36,17 @@ uint32_t DisplayDriver10x11Clock::getPixel(uint8_t x, uint8_t y) {
 }
 
 void DisplayDriver10x11Clock::setPixel(uint8_t x, uint8_t y, uint32_t color) {
-
   pixels.setPixelColor(getPixelIndex(x, y), color);
 }
 
 uint8_t DisplayDriver10x11Clock::getPixelIndex(uint8_t x, uint8_t y) {
-  /* y axis is flipped if x is even */
+  // y axis is flipped if x is even
   if ((x % 2) == 0)
     y = height() - 1 - y;
 
   uint8_t n = x * height() + y;
 
-  /* there are two extra minute digit pixels before the matrix pixels */
-  n += 2;
-
-  return n;
+  return n + 2;   // there are two extra minute digit pixels before the matrix pixels
 }
 
 void DisplayDriver10x11Clock::show() {
